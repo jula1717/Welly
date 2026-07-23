@@ -1,0 +1,93 @@
+# --- Local planning (not for public GitHub) ---
+PLAN.md
+docs/PLAN.md
+
+# --- Built application files ---
+*.apk
+*.ap_
+*.aab
+
+# --- Files for the ART/Dalvik VM ---
+*.dex
+
+# --- Java / Kotlin ---
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+hs_err_pid*
+replay_pid*
+
+# --- Gradle ---
+.gradle/
+build/
+**/build/
+
+# --- Local configuration (machine-specific) ---
+local.properties
+*.keystore
+*.jks
+keystore.properties
+signing.properties
+
+# --- Secrets / env ---
+.env
+.env.*
+!.env.example
+secrets.properties
+**/api_keys.*
+**/google-services.json
+**/GoogleService-Info.plist
+
+# --- Android Studio / IntelliJ ---
+.idea/
+*.iml
+*.ipr
+*.iws
+.navigation/
+captures/
+output.json
+
+# --- NDK / CMake ---
+.externalNativeBuild/
+.cxx/
+obj/
+
+# --- OS junk ---
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+Desktop.ini
+
+# --- Logs & temp ---
+*.log
+*.tmp
+*.swp
+*~
+
+# --- Testing / coverage ---
+.cxx/
+coverage/
+*.exec
+*.ec
+test-results/
+jacoco.exec
+
+# --- Static analysis reports (generated) ---
+.detekt/
+**/build/reports/
+
+# --- Profiling ---
+*.hprof
+
+# --- Fastlane (if used later) ---
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# --- Misc tool caches ---
+.kotlin/
+.fleet/
+.vscode/
+*.bak

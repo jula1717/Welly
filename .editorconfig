@@ -1,0 +1,15 @@
+root = true
+
+[*.{kt,kts}]
+ktlint_code_style = ktlint_official
+ktlint_function_naming_ignore_when_annotated_with = Composable
+# Allow: val x = foo(\n ...)  (not only val x =\n foo(\n ...))
+ktlint_standard_multiline-expression-wrapping = disabled
+# Depends on multiline-expression-wrapping — must disable together
+ktlint_standard_string-template-indent = disabled
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = true
+indent_size = 4
+indent_style = space
+max_line_length = 120
+insert_final_newline = true
