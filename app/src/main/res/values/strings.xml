@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Welly</string>
+
+    <string name="nav_today">Today</string>
+    <string name="nav_stats">Stats</string>
+    <string name="nav_profile">Profile</string>
+
+    <string name="today_title">Today</string>
+
+    <string name="stats_title">Statistics</string>
+
+    <string name="profile_title">Profile</string>
+</resources>

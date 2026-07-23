@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Welly</string>
+
+    <string name="nav_today">Dziś</string>
+    <string name="nav_stats">Statystyki</string>
+    <string name="nav_profile">Profil</string>
+
+    <string name="today_title">Dziś</string>
+
+    <string name="stats_title">Statystyki</string>
+
+    <string name="profile_title">Profil</string>
+</resources>
