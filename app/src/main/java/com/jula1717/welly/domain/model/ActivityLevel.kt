@@ -1,5 +1,6 @@
 package com.jula1717.welly.domain.model
 
+@Suppress("MagicNumber")
 enum class ActivityLevel(
     val tdeeMultiplier: Double,
 ) {

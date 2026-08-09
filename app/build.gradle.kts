@@ -78,6 +78,9 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -86,6 +89,10 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 tasks.named("check") {

@@ -7,6 +7,9 @@ config:
 complexity:
   LongMethod:
     threshold: 60
+  LongParameterList:
+    functionThreshold: 8
+    ignoreAnnotated: ['Composable']
   TooManyFunctions:
     thresholdInFiles: 20
     thresholdInClasses: 20
@@ -26,6 +29,8 @@ style:
     ignoreLocalVariableDeclaration: true
     ignoreConstantDeclaration: true
     ignoreCompanionObjectPropertyDeclaration: true
+  UnusedPrivateMember:
+    allowedNames: '.*Preview'
   WildcardImport:
     active: true
   ReturnCount:
@@ -41,7 +46,7 @@ naming:
   FunctionNaming:
     ignoreAnnotated: ['Composable', 'Preview']
   TopLevelPropertyNaming:
-    constantPattern: '[A-Z][A-Za-z0-9]*'
+    constantPattern: '[A-Z][_A-Z0-9]*'
 
 coroutines:
   active: true
