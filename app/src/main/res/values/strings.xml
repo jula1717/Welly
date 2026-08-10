@@ -6,8 +6,44 @@
     <string name="nav_profile">Profile</string>
 
     <string name="today_title">Today</string>
+    <string name="today_add">Add</string>
 
     <string name="stats_title">Statistics</string>
 
     <string name="profile_title">Profile</string>
+
+    <string name="add_meal_title">New meal</string>
+    <string name="add_meal_description_label">Meal description</string>
+    <string name="add_meal_date_label">Date</string>
+    <string name="add_meal_time_label">Time</string>
+    <string name="add_meal_save">Add meal</string>
+    <string name="add_meal_macro_section_title">Calculate macros with AI</string>
+    <string name="add_meal_copy_prompt">Copy prompt with meal description</string>
+    <string name="add_meal_paste_json">Paste generated response</string>
+    <string name="add_meal_macro_parsed">Read:</string>
+    <string name="add_meal_macro_error">Invalid JSON format</string>
+    <string name="add_meal_json_dialog_title">Paste JSON</string>
+    <string name="add_meal_json_dialog_hint">{"protein_g": 0, "carbs_g": 0, …}</string>
+    <string name="add_meal_json_dialog_confirm">Confirm</string>
+
+    <string name="macro_calories">kcal %1$d</string>
+    <string name="macro_protein">P %1$d</string>
+    <string name="macro_carbs">C %1$d</string>
+    <string name="macro_fat">F %1$d</string>
+    <string name="macro_fiber">Fib %1$d</string>
+
+    <string name="cd_macro_calories">%1$d calories</string>
+    <string name="cd_macro_protein">%1$d grams of protein</string>
+    <string name="cd_macro_carbs">%1$d grams of carbohydrates</string>
+    <string name="cd_macro_fat">%1$d grams of fat</string>
+    <string name="cd_macro_fiber">%1$d grams of fiber</string>
+
+    <string name="meal_type_breakfast">Breakfast</string>
+    <string name="meal_type_lunch">Lunch</string>
+    <string name="meal_type_dinner">Dinner</string>
+    <string name="meal_type_snack">Snack</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
 </resources>

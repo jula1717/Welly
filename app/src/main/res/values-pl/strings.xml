@@ -7,8 +7,44 @@
     <string name="nav_profile">Profil</string>
 
     <string name="today_title">Dziś</string>
+    <string name="today_add">Dodaj</string>
 
     <string name="stats_title">Statystyki</string>
 
     <string name="profile_title">Profil</string>
+
+    <string name="add_meal_title">Nowy posiłek</string>
+    <string name="add_meal_description_label">Opis posiłku</string>
+    <string name="add_meal_date_label">Data</string>
+    <string name="add_meal_time_label">Godzina</string>
+    <string name="add_meal_save">Dodaj posiłek</string>
+    <string name="add_meal_macro_section_title">Policz makro z zewnętrznym AI</string>
+    <string name="add_meal_copy_prompt">Skopiuj prompt z opisem posiłku</string>
+    <string name="add_meal_paste_json">Wklej wygenerowaną odpowiedź</string>
+    <string name="add_meal_macro_parsed">Odczytano:</string>
+    <string name="add_meal_macro_error">Nieprawidłowy format JSON</string>
+    <string name="add_meal_json_dialog_title">Wklej JSON</string>
+    <string name="add_meal_json_dialog_hint">{"protein_g": 0, "carbs_g": 0, …}</string>
+    <string name="add_meal_json_dialog_confirm">Potwierdź</string>
+
+    <string name="macro_calories">kcal %1$d</string>
+    <string name="macro_protein">B %1$d</string>
+    <string name="macro_carbs">W %1$d</string>
+    <string name="macro_fat">T %1$d</string>
+    <string name="macro_fiber">Bł %1$d</string>
+
+    <string name="cd_macro_calories">%1$d kilokalorii</string>
+    <string name="cd_macro_protein">%1$d gramów białka</string>
+    <string name="cd_macro_carbs">%1$d gramów węglowodanów</string>
+    <string name="cd_macro_fat">%1$d gramów tłuszczu</string>
+    <string name="cd_macro_fiber">%1$d gramów błonnika</string>
+
+    <string name="meal_type_breakfast">Śniadanie</string>
+    <string name="meal_type_lunch">Obiad</string>
+    <string name="meal_type_dinner">Kolacja</string>
+    <string name="meal_type_snack">Przekąska</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Anuluj</string>
+    <string name="close">Zamknij</string>
 </resources>
