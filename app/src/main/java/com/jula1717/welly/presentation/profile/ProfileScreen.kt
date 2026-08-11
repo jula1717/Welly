@@ -13,7 +13,18 @@ import androidx.compose.ui.unit.dp
 import com.jula1717.welly.R
 
 @Composable
-fun ProfileScreen(modifier: Modifier = Modifier) {
+fun ProfileDestination(
+    modifier: Modifier = Modifier,
+) {
+    ProfileScreen(
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun ProfileScreen(
+    modifier: Modifier = Modifier,
+) {
     Column(
         modifier = modifier
             .fillMaxSize()

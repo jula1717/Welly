@@ -13,7 +13,18 @@ import androidx.compose.ui.unit.dp
 import com.jula1717.welly.R
 
 @Composable
-fun StatsScreen(modifier: Modifier = Modifier) {
+fun StatsDestination(
+    modifier: Modifier = Modifier,
+) {
+    StatsScreen(
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun StatsScreen(
+    modifier: Modifier = Modifier,
+) {
     Column(
         modifier = modifier
             .fillMaxSize()

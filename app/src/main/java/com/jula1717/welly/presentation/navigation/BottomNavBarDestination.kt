@@ -9,23 +9,23 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.jula1717.welly.R
 
 enum class BottomNavBarDestination(
-    val route: String,
+    val route: WellyDestination,
     @param:StringRes val labelRes: Int,
     val icon: ImageVector,
 ) {
+    Profile(
+        route = ProfileDestination,
+        labelRes = R.string.nav_profile,
+        icon = Icons.Outlined.Person,
+    ),
     Today(
-        route = Destinations.TODAY,
+        route = TodayDestination,
         labelRes = R.string.nav_today,
         icon = Icons.Outlined.Today,
     ),
     Stats(
-        route = Destinations.STATS,
+        route = StatsDestination,
         labelRes = R.string.nav_stats,
         icon = Icons.Outlined.BarChart,
-    ),
-    Profile(
-        route = Destinations.PROFILE,
-        labelRes = R.string.nav_profile,
-        icon = Icons.Outlined.Person,
     ),
 }
