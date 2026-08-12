@@ -18,7 +18,7 @@
     <string name="add_meal_time_label">Time</string>
     <string name="add_meal_save">Add meal</string>
     <string name="add_meal_macro_section_title">Calculate macros with AI</string>
-    <string name="add_meal_copy_prompt">Copy prompt with meal description</string>
+    <string name="add_meal_copy_prompt">Copy prompt and description</string>
     <string name="add_meal_paste_json">Paste generated response</string>
     <string name="add_meal_macro_parsed">Read:</string>
     <string name="add_meal_macro_error">Invalid JSON format</string>
@@ -43,6 +43,7 @@
     <string name="meal_type_dinner">Dinner</string>
     <string name="meal_type_snack">Snack</string>
 
+    <string name="save">Save</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="close">Close</string>

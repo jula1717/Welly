@@ -19,7 +19,7 @@
     <string name="add_meal_time_label">Godzina</string>
     <string name="add_meal_save">Dodaj posiłek</string>
     <string name="add_meal_macro_section_title">Policz makro z zewnętrznym AI</string>
-    <string name="add_meal_copy_prompt">Skopiuj prompt z opisem posiłku</string>
+    <string name="add_meal_copy_prompt">Skopiuj prompt z opisem</string>
     <string name="add_meal_paste_json">Wklej wygenerowaną odpowiedź</string>
     <string name="add_meal_macro_parsed">Odczytano:</string>
     <string name="add_meal_macro_error">Nieprawidłowy format JSON</string>
@@ -44,6 +44,7 @@
     <string name="meal_type_dinner">Kolacja</string>
     <string name="meal_type_snack">Przekąska</string>
 
+    <string name="save">Zapisz</string>
     <string name="ok">OK</string>
     <string name="cancel">Anuluj</string>
     <string name="close">Zamknij</string>

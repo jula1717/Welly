@@ -10,7 +10,9 @@ import kotlinx.serialization.Serializable
 data object AddMealDestination : WellyDestination
 
 fun NavController.navigateToAddMeal() {
-    navigate(AddMealDestination)
+    navigate(AddMealDestination) {
+        launchSingleTop = true
+    }
 }
 
 fun NavGraphBuilder.addMealDestination(
