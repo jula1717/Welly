@@ -3,8 +3,11 @@ package com.jula1717.welly.di
 import android.content.Context
 import androidx.room.Room
 import com.jula1717.welly.data.local.WellyDatabase
+import com.jula1717.welly.data.local.dao.DrinkDao
 import com.jula1717.welly.data.local.dao.MealDao
+import com.jula1717.welly.data.repository.DrinkRepositoryImpl
 import com.jula1717.welly.data.repository.MealRepositoryImpl
+import com.jula1717.welly.domain.repository.DrinkRepository
 import com.jula1717.welly.domain.repository.MealRepository
 import dagger.Binds
 import dagger.Module
@@ -27,10 +30,15 @@ object DatabaseModule {
                 context,
                 WellyDatabase::class.java,
                 WellyDatabase.DATABASE_NAME,
-            ).build()
+            )
+            .fallbackToDestructiveMigration(dropAllTables = true)
+            .build()
 
     @Provides
     fun provideMealDao(database: WellyDatabase): MealDao = database.mealDao()
+
+    @Provides
+    fun provideDrinkDao(database: WellyDatabase): DrinkDao = database.drinkDao()
 }
 
 @Module
@@ -39,4 +47,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindMealRepository(impl: MealRepositoryImpl): MealRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindDrinkRepository(impl: DrinkRepositoryImpl): DrinkRepository
 }

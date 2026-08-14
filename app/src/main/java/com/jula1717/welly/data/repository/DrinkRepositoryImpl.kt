@@ -1,28 +1,28 @@
 package com.jula1717.welly.data.repository
 
-import com.jula1717.welly.data.local.dao.MealDao
+import com.jula1717.welly.data.local.dao.DrinkDao
 import com.jula1717.welly.data.local.mapper.toDomain
 import com.jula1717.welly.data.local.mapper.toEntity
 import com.jula1717.welly.data.local.util.toDayEpochSecondRange
-import com.jula1717.welly.domain.model.Meal
-import com.jula1717.welly.domain.repository.MealRepository
+import com.jula1717.welly.domain.model.Drink
+import com.jula1717.welly.domain.repository.DrinkRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 import javax.inject.Inject
 
-class MealRepositoryImpl
+class DrinkRepositoryImpl
     @Inject
     constructor(
-        private val mealDao: MealDao,
-    ) : MealRepository {
-        override suspend fun addMeal(meal: Meal) {
-            mealDao.insertMeal(meal.toEntity())
+        private val drinkDao: DrinkDao,
+    ) : DrinkRepository {
+        override suspend fun addDrink(drink: Drink) {
+            drinkDao.insertDrink(drink.toEntity())
         }
 
-        override fun getMealsForDay(date: LocalDate): Flow<List<Meal>> {
+        override fun getDrinksForDay(date: LocalDate): Flow<List<Drink>> {
             val (startOfDay, endOfDay) = date.toDayEpochSecondRange()
-            return mealDao.getMealsForDay(startOfDay, endOfDay).map { entities ->
+            return drinkDao.getDrinksForDay(startOfDay, endOfDay).map { entities ->
                 entities.map { it.toDomain() }
             }
         }
