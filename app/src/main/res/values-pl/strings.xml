@@ -8,24 +8,32 @@
 
     <string name="today_title">Dziś</string>
     <string name="today_add">Dodaj</string>
+    <string name="today_add_meal">Posiłek</string>
+    <string name="today_add_drink">Napój</string>
 
     <string name="stats_title">Statystyki</string>
 
     <string name="profile_title">Profil</string>
 
+    <string name="date_label">Data</string>
+    <string name="time_label">Godzina</string>
+
     <string name="add_meal_title">Nowy posiłek</string>
     <string name="add_meal_description_label">Opis posiłku</string>
-    <string name="add_meal_date_label">Data</string>
-    <string name="add_meal_time_label">Godzina</string>
-    <string name="add_meal_save">Dodaj posiłek</string>
-    <string name="add_meal_macro_section_title">Policz makro z zewnętrznym AI</string>
-    <string name="add_meal_copy_prompt">Skopiuj prompt z opisem</string>
-    <string name="add_meal_paste_json">Wklej wygenerowaną odpowiedź</string>
-    <string name="add_meal_macro_parsed">Odczytano:</string>
-    <string name="add_meal_macro_error">Nieprawidłowy format JSON</string>
-    <string name="add_meal_json_dialog_title">Wklej JSON</string>
-    <string name="add_meal_json_dialog_hint">{"protein_g": 0, "carbs_g": 0, …}</string>
-    <string name="add_meal_json_dialog_confirm">Potwierdź</string>
+
+    <string name="add_drink_title">Dodaj napój</string>
+    <string name="add_drink_calorie_caloric">Kaloryczny</string>
+    <string name="add_drink_calorie_non_caloric">Bezkaloryczny</string>
+    <string name="add_drink_amount_hint">Stuknij, aby wpisać ilość</string>
+    <string name="add_drink_description_label">Opis napoju</string>
+    <string name="add_drink_description_label_optional">Opis napoju (opcjonalnie)</string>
+    <string name="unit_ml">ml</string>
+
+    <string name="macro_ai_section_title">Policz makro z zewnętrznym AI</string>
+    <string name="macro_copy_prompt">Skopiuj prompt z opisem</string>
+    <string name="macro_paste_response">Wklej wygenerowaną odpowiedź</string>
+    <string name="macro_invalid_format">Nieprawidłowy format JSON</string>
+    <string name="macro_parsed">Odczytano:</string>
 
     <string name="macro_calories">kcal %1$d</string>
     <string name="macro_protein">B %1$d</string>

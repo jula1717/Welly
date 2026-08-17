@@ -34,7 +34,7 @@ internal fun MealTypeChip(
         },
         shape = CircleShape,
         colors = FilterChipDefaults.filterChipColors(
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
             selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
             labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
             selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,

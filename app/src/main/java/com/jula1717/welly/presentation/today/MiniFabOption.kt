@@ -1,12 +1,9 @@
-package com.jula1717.welly.presentation.components
+package com.jula1717.welly.presentation.today
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -18,13 +15,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.composables.icons.lucide.GlassWater
+import com.composables.icons.lucide.Lucide
 import com.jula1717.welly.ui.theme.WellyTheme
 
 @Composable
-internal fun AiActionButton(
+internal fun MiniFabOption(
     icon: ImageVector,
     label: String,
     containerColor: Color,
@@ -35,31 +34,25 @@ internal fun AiActionButton(
     Button(
         onClick = onClick,
         modifier = modifier,
-        shape = RoundedCornerShape(12.dp),
+        shape = CircleShape,
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
             contentColor = contentColor,
         ),
-        contentPadding = PaddingValues(
-            horizontal = 10.dp,
-            vertical = 12.dp,
-        ),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(6.dp),
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                modifier = Modifier.size(18.dp),
             )
-
             Text(
                 text = label,
-                style = MaterialTheme.typography.labelMedium,
+                fontSize = 13.sp,
                 fontWeight = FontWeight.SemiBold,
-                textAlign = TextAlign.Center,
             )
         }
     }
@@ -67,13 +60,13 @@ internal fun AiActionButton(
 
 @PreviewLightDark
 @Composable
-private fun AiActionButtonPreview() {
+private fun MiniFabOptionPreview() {
     WellyTheme {
-        AiActionButton(
-            icon = Icons.Default.ContentCopy,
-            label = "Copy prompt",
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
+        MiniFabOption(
+            icon = Lucide.GlassWater,
+            label = "Drink",
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
             onClick = {},
         )
     }

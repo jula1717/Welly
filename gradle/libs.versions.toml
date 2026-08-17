@@ -15,6 +15,7 @@ detekt = "1.23.8"
 ktlint = "14.2.0"
 room = "2.7.2"
 uiTextGoogleFonts = "1.11.4"
+iconsLucide = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +43,7 @@ androidx-room-runtime = { group = "androidx.room", name = "room-runtime", versio
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-compose-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
+composables-icons-lucide = { group = "com.composables", name = "icons-lucide", version.ref = "iconsLucide" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

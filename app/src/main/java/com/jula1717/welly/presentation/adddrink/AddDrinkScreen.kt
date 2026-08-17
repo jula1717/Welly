@@ -1,10 +1,8 @@
-package com.jula1717.welly.presentation.addmeal
+package com.jula1717.welly.presentation.adddrink
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +13,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Schedule
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -30,36 +27,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jula1717.welly.R
 import com.jula1717.welly.domain.model.MealMacros
-import com.jula1717.welly.domain.model.MealType
 import com.jula1717.welly.presentation.components.AiMacroCard
+import com.jula1717.welly.presentation.components.AmountStepper
 import com.jula1717.welly.presentation.components.DateTimeCard
-import com.jula1717.welly.presentation.components.MealTypeChip
 import com.jula1717.welly.presentation.components.SaveButton
+import com.jula1717.welly.presentation.components.SegmentedToggle
 import com.jula1717.welly.presentation.components.WellyDatePickerDialog
 import com.jula1717.welly.presentation.components.WellyTimePickerDialog
 import com.jula1717.welly.presentation.components.WellyTopBar
 import com.jula1717.welly.presentation.util.ClearFocusOnResume
 import com.jula1717.welly.presentation.util.DATE_DISPLAY_FORMAT
 import com.jula1717.welly.presentation.util.TIME_DISPLAY_FORMAT
-import com.jula1717.welly.presentation.util.titleResId
 import com.jula1717.welly.ui.theme.WellyTheme
 import java.time.LocalDate
 import java.time.LocalTime
 
 @Composable
-fun AddMealDestination(
+fun AddDrinkDestination(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: AddMealViewModel = hiltViewModel(),
+    viewModel: AddDrinkViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    // TODO: replace deprecated LocalClipboardManager with LocalClipboard.
     val clipboardManager = LocalClipboardManager.current
 
     ClearFocusOnResume()
@@ -67,7 +62,7 @@ fun AddMealDestination(
     LaunchedEffect(Unit) {
         viewModel.effects.collect { effect ->
             when (effect) {
-                AddMealEffect.NavigateBack -> onBack()
+                AddDrinkEffect.NavigateBack -> onBack()
             }
         }
     }
@@ -80,7 +75,7 @@ fun AddMealDestination(
             initialDate = state.date,
             onDismiss = { showDatePicker = false },
             onConfirm = { date ->
-                viewModel.onEvent(AddMealUiEvent.OnDateChanged(date))
+                viewModel.onEvent(AddDrinkUiEvent.OnDateChanged(date))
                 showDatePicker = false
             },
             modifier = Modifier.padding(horizontal = 32.dp),
@@ -92,14 +87,15 @@ fun AddMealDestination(
             initialTime = state.time,
             onDismiss = { showTimePicker = false },
             onConfirm = { time ->
-                viewModel.onEvent(AddMealUiEvent.OnTimeChanged(time))
+                viewModel.onEvent(AddDrinkUiEvent.OnTimeChanged(time))
                 showTimePicker = false
             },
         )
     }
 
-    AddMealScreen(
-        selectedType = state.type,
+    AddDrinkScreen(
+        calorieType = state.calorieType,
+        amountMl = state.amountMl,
         description = state.description,
         date = state.date,
         time = state.time,
@@ -112,21 +108,21 @@ fun AddMealDestination(
         onEvent = viewModel::onEvent,
         onCopyPrompt = {
             clipboardManager.setText(AnnotatedString(state.generatedPrompt))
-            viewModel.onEvent(AddMealUiEvent.OnCopyPromptClicked)
+            viewModel.onEvent(AddDrinkUiEvent.OnCopyPromptClicked)
         },
         onPasteJson = {
             viewModel.onEvent(
-                AddMealUiEvent.OnMacrosJsonChanged(clipboardManager.getText()?.text.orEmpty()),
+                AddDrinkUiEvent.OnMacrosJsonChanged(clipboardManager.getText()?.text.orEmpty()),
             )
         },
         modifier = modifier,
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
-internal fun AddMealScreen(
-    selectedType: MealType,
+internal fun AddDrinkScreen(
+    calorieType: DrinkCalorieType,
+    amountMl: Int,
     description: String,
     date: LocalDate,
     time: LocalTime,
@@ -136,7 +132,7 @@ internal fun AddMealScreen(
     onBack: () -> Unit,
     onShowDatePicker: () -> Unit,
     onShowTimePicker: () -> Unit,
-    onEvent: (AddMealUiEvent) -> Unit,
+    onEvent: (AddDrinkUiEvent) -> Unit,
     onCopyPrompt: () -> Unit,
     onPasteJson: () -> Unit,
     modifier: Modifier = Modifier,
@@ -146,7 +142,7 @@ internal fun AddMealScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
     ) {
-        WellyTopBar(titleRes = R.string.add_meal_title, onBack = onBack)
+        WellyTopBar(titleRes = R.string.add_drink_title, onBack = onBack)
 
         Column(
             modifier = Modifier
@@ -155,21 +151,18 @@ internal fun AddMealScreen(
                 .padding(horizontal = 20.dp)
                 .padding(bottom = 8.dp),
         ) {
-            FlowRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 4.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                MealType.entries.forEach { type ->
-                    MealTypeChip(
-                        label = stringResource(type.titleResId),
-                        selected = type == selectedType,
-                        onClick = { onEvent(AddMealUiEvent.OnTypeChanged(type)) },
-                    )
-                }
-            }
+            SegmentedToggle(
+                options = listOf(
+                    stringResource(R.string.add_drink_calorie_caloric),
+                    stringResource(R.string.add_drink_calorie_non_caloric),
+                ),
+                selectedIndex = if (calorieType == DrinkCalorieType.Caloric) 0 else 1,
+                onOptionSelected = { index ->
+                    val type = if (index == 0) DrinkCalorieType.Caloric else DrinkCalorieType.NonCaloric
+                    onEvent(AddDrinkUiEvent.OnCalorieTypeChanged(type))
+                },
+                modifier = Modifier.padding(top = 4.dp),
+            )
 
             Row(
                 modifier = Modifier
@@ -193,14 +186,31 @@ internal fun AddMealScreen(
                 )
             }
 
+            AmountStepper(
+                amountMl = amountMl,
+                onAmountMlChange = { onEvent(AddDrinkUiEvent.OnAmountChanged(it)) },
+                hint = stringResource(R.string.add_drink_amount_hint),
+                unitLabel = stringResource(R.string.unit_ml),
+                minAmountMl = AddDrinkUiState.MIN_AMOUNT_ML,
+                maxAmountMl = AddDrinkUiState.MAX_AMOUNT_ML,
+                modifier = Modifier.padding(top = 14.dp),
+            )
+
             OutlinedTextField(
                 value = description,
-                onValueChange = { onEvent(AddMealUiEvent.OnDescriptionChanged(it)) },
+                onValueChange = { onEvent(AddDrinkUiEvent.OnDescriptionChanged(it)) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp),
-                label = { Text(stringResource(R.string.add_meal_description_label)) },
-                minLines = 3,
+                    .padding(top = 10.dp),
+                label = {
+                    val labelRes = if (calorieType == DrinkCalorieType.Caloric) {
+                        R.string.add_drink_description_label
+                    } else {
+                        R.string.add_drink_description_label_optional
+                    }
+                    Text(stringResource(labelRes))
+                },
+                minLines = 2,
                 shape = RoundedCornerShape(14.dp),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = MaterialTheme.colorScheme.primary,
@@ -211,34 +221,60 @@ internal fun AddMealScreen(
                 ),
             )
 
-            AiMacroCard(
-                modifier = Modifier.padding(top = 16.dp),
-                macros = macros,
-                macrosError = macrosError,
-                onCopyPrompt = onCopyPrompt,
-                onPasteJson = onPasteJson,
-            )
+            if (calorieType == DrinkCalorieType.Caloric) {
+                AiMacroCard(
+                    modifier = Modifier.padding(top = 16.dp),
+                    macros = macros,
+                    macrosError = macrosError,
+                    onCopyPrompt = onCopyPrompt,
+                    onPasteJson = onPasteJson,
+                )
+            }
         }
 
         SaveButton(
             enabled = canSave,
-            onClick = { onEvent(AddMealUiEvent.OnSave) },
+            onClick = { onEvent(AddDrinkUiEvent.OnSave) },
         )
     }
 }
 
-@Preview(showSystemUi = true)
+@PreviewLightDark
 @Composable
-private fun AddMealScreenPreview() {
+private fun AddDrinkScreenCaloricPreview() {
     WellyTheme {
-        AddMealScreen(
-            selectedType = MealType.Breakfast,
+        AddDrinkScreen(
+            calorieType = DrinkCalorieType.Caloric,
+            amountMl = 330,
             description = "",
             date = LocalDate.now(),
             time = LocalTime.now(),
             macros = null,
             macrosError = false,
             canSave = false,
+            onBack = {},
+            onShowDatePicker = {},
+            onShowTimePicker = {},
+            onEvent = {},
+            onCopyPrompt = {},
+            onPasteJson = {},
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun AddDrinkScreenNonCaloricPreview() {
+    WellyTheme {
+        AddDrinkScreen(
+            calorieType = DrinkCalorieType.NonCaloric,
+            amountMl = 330,
+            description = "",
+            date = LocalDate.now(),
+            time = LocalTime.now(),
+            macros = null,
+            macrosError = false,
+            canSave = true,
             onBack = {},
             onShowDatePicker = {},
             onShowTimePicker = {},

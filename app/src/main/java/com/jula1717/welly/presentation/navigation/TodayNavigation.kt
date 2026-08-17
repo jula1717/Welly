@@ -15,10 +15,12 @@ fun NavController.navigateToToday() {
 
 fun NavGraphBuilder.todayDestination(
     onAddMeal: () -> Unit,
+    onAddDrink: () -> Unit,
 ) {
     composable<TodayDestination> {
         TodayDestination(
             onAddMeal = onAddMeal,
+            onAddDrink = onAddDrink,
         )
     }
 }

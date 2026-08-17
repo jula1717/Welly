@@ -1,4 +1,4 @@
-package com.jula1717.welly.presentation.addmeal
+package com.jula1717.welly.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,8 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jula1717.welly.R
 import com.jula1717.welly.domain.model.MealMacros
-import com.jula1717.welly.presentation.components.AiActionButton
-import com.jula1717.welly.presentation.components.ParsedMacrosBar
 import com.jula1717.welly.ui.theme.WellyTheme
 
 @Composable
@@ -42,7 +40,7 @@ internal fun AiMacroCard(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(18.dp))
-            .background(MaterialTheme.colorScheme.surface)
+            .background(MaterialTheme.colorScheme.surfaceContainerLowest)
             .border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(18.dp)),
     ) {
         Column(
@@ -50,7 +48,7 @@ internal fun AiMacroCard(
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(
-                text = stringResource(R.string.add_meal_macro_section_title).uppercase(),
+                text = stringResource(R.string.macro_ai_section_title).uppercase(),
                 fontSize = 11.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -64,9 +62,9 @@ internal fun AiMacroCard(
             ) {
                 AiActionButton(
                     icon = Icons.Default.ContentCopy,
-                    label = stringResource(R.string.add_meal_copy_prompt),
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    label = stringResource(R.string.macro_copy_prompt),
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                     onClick = onCopyPrompt,
                     modifier = Modifier
                         .weight(1f)
@@ -74,9 +72,9 @@ internal fun AiMacroCard(
                 )
                 AiActionButton(
                     icon = Icons.Default.ContentPaste,
-                    label = stringResource(R.string.add_meal_paste_json),
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                    label = stringResource(R.string.macro_paste_response),
+                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                    contentColor = MaterialTheme.colorScheme.onSurface,
                     onClick = onPasteJson,
                     modifier = Modifier
                         .weight(1f)
@@ -85,7 +83,7 @@ internal fun AiMacroCard(
             }
             if (macrosError) {
                 Text(
-                    text = stringResource(R.string.add_meal_macro_error),
+                    text = stringResource(R.string.macro_invalid_format),
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.error,
                 )
