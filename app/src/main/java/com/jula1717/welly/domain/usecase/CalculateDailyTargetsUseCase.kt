@@ -10,7 +10,7 @@ import kotlin.math.roundToInt
  * - Fat: 25–35% of calorie bounds (9 kcal/g)
  * - Carbs: remaining energy after protein/fat extremes
  * - Fiber: 14 g per 1000 kcal of calorie bounds
- * - Water: 30–40 ml/kg
+ * - Hydration: 30–40 ml/kg
  */
 class CalculateDailyTargetsUseCase
     @Inject
@@ -47,8 +47,8 @@ class CalculateDailyTargetsUseCase
                 )
             val fiberMin = ((calorieMin / 1000.0) * FIBER_G_PER_1000_KCAL).roundToInt()
             val fiberMax = ((calorieMax / 1000.0) * FIBER_G_PER_1000_KCAL).roundToInt()
-            val waterMin = (profile.weightKg * WATER_ML_PER_KG_MIN).roundToInt()
-            val waterMax = (profile.weightKg * WATER_ML_PER_KG_MAX).roundToInt()
+            val hydrationMin = (profile.weightKg * HYDRATION_ML_PER_KG_MIN).roundToInt()
+            val hydrationMax = (profile.weightKg * HYDRATION_ML_PER_KG_MAX).roundToInt()
 
             return DailyTargets(
                 bmrKcal = bmr,
@@ -63,8 +63,8 @@ class CalculateDailyTargetsUseCase
                 fatGramsMax = fatMax,
                 fiberGramsMin = fiberMin,
                 fiberGramsMax = fiberMax,
-                waterMlMin = waterMin,
-                waterMlMax = waterMax,
+                hydrationMlMin = hydrationMin,
+                hydrationMlMax = hydrationMax,
             )
         }
 
@@ -89,7 +89,7 @@ class CalculateDailyTargetsUseCase
             const val KCAL_PER_CARB_G = 4
             const val KCAL_PER_FAT_G = 9
             const val FIBER_G_PER_1000_KCAL = 14.0
-            const val WATER_ML_PER_KG_MIN = 30.0
-            const val WATER_ML_PER_KG_MAX = 40.0
+            const val HYDRATION_ML_PER_KG_MIN = 30.0
+            const val HYDRATION_ML_PER_KG_MAX = 40.0
         }
     }

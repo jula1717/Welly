@@ -6,7 +6,6 @@
     <string name="nav_stats">Statystyki</string>
     <string name="nav_profile">Profil</string>
 
-    <string name="today_title">Dziś</string>
     <string name="today_add">Dodaj</string>
     <string name="today_add_meal">Posiłek</string>
     <string name="today_add_drink">Napój</string>
@@ -33,7 +32,6 @@
     <string name="macro_copy_prompt">Skopiuj prompt z opisem</string>
     <string name="macro_paste_response">Wklej wygenerowaną odpowiedź</string>
     <string name="macro_invalid_format">Nieprawidłowy format JSON</string>
-    <string name="macro_parsed">Odczytano:</string>
 
     <string name="macro_calories">kcal %1$d</string>
     <string name="macro_protein">B %1$d</string>
@@ -47,10 +45,34 @@
     <string name="cd_macro_fat">%1$d gramów tłuszczu</string>
     <string name="cd_macro_fiber">%1$d gramów błonnika</string>
 
+    <string name="calories">Kalorie</string>
+    <string name="protein">Białko</string>
+    <string name="carbs">Węglowodany</string>
+    <string name="fat">Tłuszcz</string>
+    <string name="fiber">Błonnik</string>
+
     <string name="meal_type_breakfast">Śniadanie</string>
     <string name="meal_type_lunch">Obiad</string>
     <string name="meal_type_dinner">Kolacja</string>
     <string name="meal_type_snack">Przekąska</string>
+
+    <string name="today_calories_label">Kalorie</string>
+    <string name="kcal_range">%1$d–%2$d kcal</string>
+    <string name="gram_range">%1$d–%2$d g</string>
+    <string name="today_water_label">Woda</string>
+    <string name="today_water_progress">%1$d / %2$d ml</string>
+    <string name="today_drink_amount_label">%1$d ml</string>
+    <string name="today_drink_description_with_amount">%1$s (%2$d ml)</string>
+    <string name="today_entries_count">Wpisy — %1$d</string>
+    <string name="unit_kcal">kcal</string>
+    <string name="unit_g">g</string>
+    <string name="kcal_amount">%1$d kcal</string>
+
+    <string name="cd_range_below">Poniżej celu</string>
+    <string name="cd_range_within">W zakresie celu</string>
+    <string name="cd_range_above">Powyżej celu</string>
+    <string name="cd_previous_day">Poprzedni dzień</string>
+    <string name="cd_next_day">Następny dzień</string>
 
     <string name="save">Zapisz</string>
     <string name="ok">OK</string>

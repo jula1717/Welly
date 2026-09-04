@@ -26,18 +26,18 @@ class CalculateDailyTargetsUseCaseTest {
 
         assertEquals(1320, targets.bmrKcal)
         assertEquals(2046, targets.tdeeKcal)
-        assertEquals(2046, targets.calorieTargetKcalMin)
-        assertEquals(2046, targets.calorieTargetKcalMax)
+        assertEquals(1841, targets.calorieTargetKcalMin)
+        assertEquals(2148, targets.calorieTargetKcalMax)
         assertEquals(96, targets.proteinGramsMin)
         assertEquals(132, targets.proteinGramsMax)
-        assertEquals(57, targets.fatGramsMin)
-        assertEquals(80, targets.fatGramsMax)
-        assertEquals(200, targets.carbsGramsMin)
-        assertEquals(287, targets.carbsGramsMax)
-        assertEquals(29, targets.fiberGramsMin)
-        assertEquals(29, targets.fiberGramsMax)
-        assertEquals(1800, targets.waterMlMin)
-        assertEquals(2400, targets.waterMlMax)
+        assertEquals(51, targets.fatGramsMin)
+        assertEquals(84, targets.fatGramsMax)
+        assertEquals(139, targets.carbsGramsMin)
+        assertEquals(326, targets.carbsGramsMax)
+        assertEquals(26, targets.fiberGramsMin)
+        assertEquals(30, targets.fiberGramsMax)
+        assertEquals(1800, targets.hydrationMlMin)
+        assertEquals(2400, targets.hydrationMlMax)
     }
 
     @Test

@@ -5,7 +5,6 @@
     <string name="nav_stats">Stats</string>
     <string name="nav_profile">Profile</string>
 
-    <string name="today_title">Today</string>
     <string name="today_add">Add</string>
     <string name="today_add_meal">Meal</string>
     <string name="today_add_drink">Drink</string>
@@ -32,7 +31,6 @@
     <string name="macro_copy_prompt">Copy prompt and description</string>
     <string name="macro_paste_response">Paste generated response</string>
     <string name="macro_invalid_format">Invalid JSON format</string>
-    <string name="macro_parsed">Read:</string>
 
     <string name="macro_calories">kcal %1$d</string>
     <string name="macro_protein">P %1$d</string>
@@ -46,10 +44,34 @@
     <string name="cd_macro_fat">%1$d grams of fat</string>
     <string name="cd_macro_fiber">%1$d grams of fiber</string>
 
+    <string name="calories">Calories</string>
+    <string name="protein">Protein</string>
+    <string name="carbs">Carbs</string>
+    <string name="fat">Fat</string>
+    <string name="fiber">Fiber</string>
+
     <string name="meal_type_breakfast">Breakfast</string>
     <string name="meal_type_lunch">Lunch</string>
     <string name="meal_type_dinner">Dinner</string>
     <string name="meal_type_snack">Snack</string>
+
+    <string name="today_calories_label">Calories</string>
+    <string name="kcal_range">%1$d–%2$d kcal</string>
+    <string name="gram_range">%1$d–%2$d g</string>
+    <string name="today_water_label">Water</string>
+    <string name="today_water_progress">%1$d / %2$d ml</string>
+    <string name="today_drink_amount_label">%1$d ml</string>
+    <string name="today_drink_description_with_amount">%1$s (%2$d ml)</string>
+    <string name="today_entries_count">Entries — %1$d</string>
+    <string name="unit_kcal">kcal</string>
+    <string name="unit_g">g</string>
+    <string name="kcal_amount">%1$d kcal</string>
+
+    <string name="cd_range_below">Below target</string>
+    <string name="cd_range_within">Within target</string>
+    <string name="cd_range_above">Above target</string>
+    <string name="cd_previous_day">Previous day</string>
+    <string name="cd_next_day">Next day</string>
 
     <string name="save">Save</string>
     <string name="ok">OK</string>

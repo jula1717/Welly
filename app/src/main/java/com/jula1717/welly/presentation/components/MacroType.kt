@@ -22,11 +22,21 @@ internal val MacroType.contentDescriptionResId: Int
     }
 
 @get:StringRes
-internal val MacroType.titleResId: Int
+internal val MacroType.shortLabelResId: Int
     get() = when (this) {
         MacroType.CALORIES -> R.string.macro_calories
         MacroType.PROTEIN -> R.string.macro_protein
         MacroType.CARBS -> R.string.macro_carbs
         MacroType.FAT -> R.string.macro_fat
         MacroType.FIBER -> R.string.macro_fiber
+    }
+
+@get:StringRes
+internal val MacroType.displayNameResId: Int
+    get() = when (this) {
+        MacroType.CALORIES -> R.string.calories
+        MacroType.PROTEIN -> R.string.protein
+        MacroType.CARBS -> R.string.carbs
+        MacroType.FAT -> R.string.fat
+        MacroType.FIBER -> R.string.fiber
     }

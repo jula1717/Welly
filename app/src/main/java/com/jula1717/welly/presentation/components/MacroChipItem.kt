@@ -13,7 +13,7 @@ internal fun MacroChipItem(
     modifier: Modifier = Modifier,
 ) {
     MacroChip(
-        label = stringResource(type.titleResId, value),
+        label = stringResource(type.shortLabelResId, value),
         contentDescription = stringResource(type.contentDescriptionResId, value),
         modifier = modifier,
     )

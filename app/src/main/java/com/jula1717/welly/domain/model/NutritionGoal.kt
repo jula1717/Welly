@@ -6,6 +6,6 @@ enum class NutritionGoal(
     val tdeeFactorMax: Double,
 ) {
     Lose(0.80, 0.90),
-    Maintain(1.0, 1.0),
+    Maintain(0.90, 1.05),
     Gain(1.05, 1.15),
 }

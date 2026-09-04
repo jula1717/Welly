@@ -13,6 +13,6 @@ data class DailyTargets(
     val fatGramsMax: Int,
     val fiberGramsMin: Int,
     val fiberGramsMax: Int,
-    val waterMlMin: Int,
-    val waterMlMax: Int,
+    val hydrationMlMin: Int,
+    val hydrationMlMax: Int,
 )

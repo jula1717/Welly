@@ -3,10 +3,12 @@ package com.jula1717.welly.presentation.components
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -23,9 +25,21 @@ internal fun WellyDatePickerDialog(
     onDismiss: () -> Unit,
     onConfirm: (LocalDate) -> Unit,
     modifier: Modifier = Modifier,
+    maxDate: LocalDate = LocalDate.now(),
 ) {
+    val selectableDates = remember(maxDate) {
+        object : SelectableDates {
+            override fun isSelectableDate(utcTimeMillis: Long): Boolean =
+                utcTimeMillis <= maxDate.toUtcEpochMillis()
+
+            override fun isSelectableYear(year: Int): Boolean =
+                year <= maxDate.year
+        }
+    }
+
     val datePickerState = rememberDatePickerState(
-        initialSelectedDateMillis = initialDate.toUtcEpochMillis()
+        initialSelectedDateMillis = initialDate.toUtcEpochMillis(),
+        selectableDates = selectableDates,
     )
 
     DatePickerDialog(
