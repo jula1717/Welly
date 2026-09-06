@@ -38,6 +38,8 @@ import java.time.LocalDate
 fun TodayDestination(
     onAddMeal: () -> Unit,
     onAddDrink: () -> Unit,
+    onOpenProfile: () -> Unit,
+    onOpenSettings: (() -> Unit),
     modifier: Modifier = Modifier,
     viewModel: TodayViewModel = hiltViewModel(),
 ) {
@@ -53,6 +55,8 @@ fun TodayDestination(
         onEvent = viewModel::onEvent,
         onAddMeal = onAddMeal,
         onAddDrink = onAddDrink,
+        onOpenProfile = onOpenProfile,
+        onOpenSettings = onOpenSettings,
         modifier = modifier,
     )
 }
@@ -63,6 +67,8 @@ internal fun TodayScreen(
     onEvent: (TodayUiEvent) -> Unit,
     onAddMeal: () -> Unit,
     onAddDrink: () -> Unit,
+    onOpenProfile: () -> Unit,
+    onOpenSettings: (() -> Unit),
     modifier: Modifier = Modifier,
 ) {
     var showDatePicker by rememberSaveable { mutableStateOf(false) }
@@ -92,7 +98,9 @@ internal fun TodayScreen(
                 onPreviousDay = { onEvent(TodayUiEvent.OnPreviousDay) },
                 onNextDay = { onEvent(TodayUiEvent.OnNextDay) },
                 onDateClick = { showDatePicker = true },
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp),
+                onOpenProfile = onOpenProfile,
+                onOpenSettings = onOpenSettings,
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
             )
 
             LazyColumn(
@@ -198,6 +206,8 @@ private fun TodayScreenPreview() {
             onEvent = {},
             onAddMeal = {},
             onAddDrink = {},
+            onOpenProfile = {},
+            onOpenSettings = {},
         )
     }
 }

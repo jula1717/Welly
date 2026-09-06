@@ -5,13 +5,16 @@ import com.jula1717.welly.domain.model.Drink
 import com.jula1717.welly.domain.model.Meal
 import com.jula1717.welly.domain.model.MealMacros
 import com.jula1717.welly.domain.model.MealType
+import com.jula1717.welly.domain.model.UserProfile
 import com.jula1717.welly.domain.repository.DrinkRepository
 import com.jula1717.welly.domain.repository.MealRepository
+import com.jula1717.welly.domain.repository.UserProfileRepository
 import com.jula1717.welly.domain.usecase.CalculateBmrUseCase
 import com.jula1717.welly.domain.usecase.CalculateDailyIntakeTotalsUseCase
 import com.jula1717.welly.domain.usecase.CalculateDailyTargetsUseCase
 import com.jula1717.welly.domain.usecase.GetDrinksForDayUseCase
 import com.jula1717.welly.domain.usecase.GetMealsForDayUseCase
+import com.jula1717.welly.domain.usecase.ObserveUserProfileUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -51,11 +54,13 @@ class TodayViewModelTest {
     private fun buildViewModel(
         meals: List<Meal> = emptyList(),
         drinks: List<Drink> = emptyList(),
+        profile: UserProfile? = null,
     ): TodayViewModel {
         val viewModel = TodayViewModel(
             getMealsForDayUseCase = GetMealsForDayUseCase(FakeMealRepository(meals)),
             getDrinksForDayUseCase = GetDrinksForDayUseCase(FakeDrinkRepository(drinks)),
-            calculateDailyTargetsUseCase = CalculateDailyTargetsUseCase(CalculateBmrUseCase()),
+            observeUserProfileUseCase = ObserveUserProfileUseCase(FakeUserProfileRepository(profile)),
+            calculateDailyTargetsUseCase = CalculateDailyTargetsUseCase(CalculateBmrUseCase(), clock),
             calculateDailyIntakeTotals = CalculateDailyIntakeTotalsUseCase(),
             clock = clock,
         )
@@ -195,5 +200,13 @@ class TodayViewModelTest {
 
         override fun getDrinksForDay(date: LocalDate): Flow<List<Drink>> =
             flowOf(drinks.filter { it.dateTime.toLocalDate() == date })
+    }
+
+    private class FakeUserProfileRepository(
+        private val profile: UserProfile?,
+    ) : UserProfileRepository {
+        override fun observeProfile(): Flow<UserProfile?> = flowOf(profile)
+
+        override suspend fun updateProfile(profile: UserProfile) = Unit
     }
 }

@@ -6,17 +6,22 @@ import com.jula1717.welly.domain.model.NutritionGoal
 import com.jula1717.welly.domain.model.UserProfile
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.time.Clock
+import java.time.LocalDate
+import java.time.ZoneOffset
 
 class CalculateDailyTargetsUseCaseTest {
-    private val useCase = CalculateDailyTargetsUseCase(CalculateBmrUseCase())
+    private val today = LocalDate.of(2026, 9, 4)
+    private val clock = Clock.fixed(today.atStartOfDay(ZoneOffset.UTC).toInstant(), ZoneOffset.UTC)
+    private val useCase = CalculateDailyTargetsUseCase(CalculateBmrUseCase(), clock)
 
     @Test
     fun `calculates target ranges for maintain goal`() {
         val profile =
             UserProfile(
                 sex = BiologicalSex.Female,
-                ageYears = 30,
-                heightCm = 165.0,
+                dateOfBirth = today.minusYears(30),
+                heightCm = 165,
                 weightKg = 60.0,
                 activityLevel = ActivityLevel.Moderate,
                 goal = NutritionGoal.Maintain,
@@ -45,8 +50,8 @@ class CalculateDailyTargetsUseCaseTest {
         val profile =
             UserProfile(
                 sex = BiologicalSex.Female,
-                ageYears = 30,
-                heightCm = 165.0,
+                dateOfBirth = today.minusYears(30),
+                heightCm = 165,
                 weightKg = 60.0,
                 activityLevel = ActivityLevel.Moderate,
                 goal = NutritionGoal.Lose,
@@ -63,8 +68,8 @@ class CalculateDailyTargetsUseCaseTest {
         val profile =
             UserProfile(
                 sex = BiologicalSex.Male,
-                ageYears = 28,
-                heightCm = 180.0,
+                dateOfBirth = today.minusYears(28),
+                heightCm = 180,
                 weightKg = 80.0,
                 activityLevel = ActivityLevel.Active,
                 goal = NutritionGoal.Gain,

@@ -7,6 +7,7 @@ import kotlin.reflect.KClass
 private val formDestinations: Set<KClass<out WellyDestination>> = setOf(
     AddMealDestination::class,
     AddDrinkDestination::class,
+    ProfileDestination::class,
 )
 
 fun isFormDestination(destination: NavDestination?): Boolean =

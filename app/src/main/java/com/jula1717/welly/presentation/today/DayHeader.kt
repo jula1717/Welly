@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -15,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,6 +36,8 @@ internal fun DayHeader(
     onPreviousDay: () -> Unit,
     onNextDay: () -> Unit,
     onDateClick: () -> Unit,
+    onOpenProfile: () -> Unit,
+    onOpenSettings: (() -> Unit) = {},
     modifier: Modifier = Modifier,
 ) {
     val locale = LocalLocale.current.platformLocale
@@ -44,6 +49,12 @@ internal fun DayHeader(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        HeaderActionButton(
+            icon = Icons.Outlined.AccountCircle,
+            contentDescription = stringResource(R.string.cd_open_profile),
+            onClick = onOpenProfile,
+        )
+
         IconButton(onClick = onPreviousDay) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
@@ -83,6 +94,27 @@ internal fun DayHeader(
                 },
             )
         }
+
+        HeaderActionButton(
+            icon = Icons.Outlined.Settings,
+            contentDescription = stringResource(R.string.cd_open_settings),
+            onClick = onOpenSettings,
+        )
+    }
+}
+
+@Composable
+private fun HeaderActionButton(
+    icon: ImageVector,
+    contentDescription: String,
+    onClick: () -> Unit,
+) {
+    IconButton(onClick = onClick) {
+        Icon(
+            imageVector = icon,
+            contentDescription = contentDescription,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
     }
 }
 
@@ -96,6 +128,8 @@ private fun DayHeaderPreview() {
             onPreviousDay = {},
             onNextDay = {},
             onDateClick = {},
+            onOpenProfile = {},
+            onOpenSettings = {},
         )
     }
 }

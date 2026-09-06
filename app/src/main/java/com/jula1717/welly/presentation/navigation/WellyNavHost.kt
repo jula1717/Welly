@@ -44,11 +44,15 @@ fun WellyNavHost(
             startDestination = TodayDestination,
             modifier = Modifier.padding(innerPadding),
         ) {
-            profileDestination()
+            profileDestination(
+                onBack = { navController.popBackStack() },
+            )
 
             todayDestination(
                 onAddMeal = { navController.navigateToAddMeal() },
                 onAddDrink = { navController.navigateToAddDrink() },
+                onOpenProfile = { navController.navigateToProfile() },
+                onOpenSettings = {}, //TODO: Implement settings navigation after settings screen is implemented
             )
 
             addMealDestination(

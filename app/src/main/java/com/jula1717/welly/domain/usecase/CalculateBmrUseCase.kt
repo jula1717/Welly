@@ -10,13 +10,14 @@ class CalculateBmrUseCase
         operator fun invoke(
             sex: BiologicalSex,
             weightKg: Double,
-            heightCm: Double,
+            heightCm: Int,
             ageYears: Int,
         ): Int {
             val base = (10 * weightKg) + (6.25 * heightCm) - (5 * ageYears)
             val bmr = when (sex) {
                 BiologicalSex.Male -> base + 5
                 BiologicalSex.Female -> base - 161
+                BiologicalSex.Unspecified -> base - 78
             }
             return bmr.roundToInt()
         }

@@ -13,9 +13,8 @@ fun NavController.navigateToProfile() {
     navigate(ProfileDestination)
 }
 
-fun NavGraphBuilder.profileDestination(
-) {
+fun NavGraphBuilder.profileDestination(onBack: () -> Unit) {
     composable<ProfileDestination> {
-        ProfileDestination()
+        ProfileDestination(onBack = onBack)
     }
 }

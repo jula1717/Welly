@@ -2,6 +2,8 @@ package com.jula1717.welly.domain.usecase
 
 import com.jula1717.welly.domain.model.DailyTargets
 import com.jula1717.welly.domain.model.UserProfile
+import java.time.Clock
+import java.time.LocalDate
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -16,6 +18,7 @@ class CalculateDailyTargetsUseCase
     @Inject
     constructor(
         private val calculateBmr: CalculateBmrUseCase,
+        private val clock: Clock,
     ) {
         operator fun invoke(profile: UserProfile): DailyTargets {
             val bmr =
@@ -23,7 +26,7 @@ class CalculateDailyTargetsUseCase
                     sex = profile.sex,
                     weightKg = profile.weightKg,
                     heightCm = profile.heightCm,
-                    ageYears = profile.ageYears,
+                    ageYears = profile.age(LocalDate.now(clock)),
                 )
             val tdee = (bmr * profile.activityLevel.tdeeMultiplier).roundToInt()
             val calorieMin = (tdee * profile.goal.tdeeFactorMin).roundToInt()

@@ -45,6 +45,11 @@ android {
         abortOnError = true
         checkReleaseBuilds = true
     }
+    testOptions {
+        // Let JVM unit tests exercise code paths that touch android.util.Log (e.g. error
+        // handlers) instead of crashing on the un-mocked stub.
+        unitTests.isReturnDefaultValues = true
+    }
 }
 
 ktlint {
@@ -84,6 +89,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.datastore.preferences)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)

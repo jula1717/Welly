@@ -7,8 +7,10 @@ import com.jula1717.welly.data.local.dao.DrinkDao
 import com.jula1717.welly.data.local.dao.MealDao
 import com.jula1717.welly.data.repository.DrinkRepositoryImpl
 import com.jula1717.welly.data.repository.MealRepositoryImpl
+import com.jula1717.welly.data.repository.UserProfileRepositoryImpl
 import com.jula1717.welly.domain.repository.DrinkRepository
 import com.jula1717.welly.domain.repository.MealRepository
+import com.jula1717.welly.domain.repository.UserProfileRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -51,4 +53,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindDrinkRepository(impl: DrinkRepositoryImpl): DrinkRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindUserProfileRepository(impl: UserProfileRepositoryImpl): UserProfileRepository
 }

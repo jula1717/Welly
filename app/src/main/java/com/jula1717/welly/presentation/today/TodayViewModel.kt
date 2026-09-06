@@ -2,17 +2,15 @@ package com.jula1717.welly.presentation.today
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jula1717.welly.domain.model.ActivityLevel
-import com.jula1717.welly.domain.model.BiologicalSex
 import com.jula1717.welly.domain.model.DailyTargets
 import com.jula1717.welly.domain.model.Drink
 import com.jula1717.welly.domain.model.Meal
-import com.jula1717.welly.domain.model.NutritionGoal
 import com.jula1717.welly.domain.model.UserProfile
 import com.jula1717.welly.domain.usecase.CalculateDailyIntakeTotalsUseCase
 import com.jula1717.welly.domain.usecase.CalculateDailyTargetsUseCase
 import com.jula1717.welly.domain.usecase.GetDrinksForDayUseCase
 import com.jula1717.welly.domain.usecase.GetMealsForDayUseCase
+import com.jula1717.welly.domain.usecase.ObserveUserProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +19,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import java.time.Clock
@@ -35,6 +33,7 @@ class TodayViewModel
     constructor(
         getMealsForDayUseCase: GetMealsForDayUseCase,
         getDrinksForDayUseCase: GetDrinksForDayUseCase,
+        observeUserProfileUseCase: ObserveUserProfileUseCase,
         calculateDailyTargetsUseCase: CalculateDailyTargetsUseCase,
         private val calculateDailyIntakeTotals: CalculateDailyIntakeTotalsUseCase,
         private val clock: Clock,
@@ -47,9 +46,12 @@ class TodayViewModel
         /** "Today", re-read on every screen resume so a midnight rollover is picked up. */
         private val currentDay = MutableStateFlow(today())
 
-        // TODO: replace flowOf once the profile repository is implemented.
-        private val initialTargets: DailyTargets = calculateDailyTargetsUseCase(DEFAULT_PROFILE)
-        private val targets: Flow<DailyTargets> = flowOf(initialTargets)
+        private val initialTargets: DailyTargets =
+            calculateDailyTargetsUseCase(UserProfile.default(today()))
+        private val targets: Flow<DailyTargets> =
+            observeUserProfileUseCase().map { profile ->
+                calculateDailyTargetsUseCase(profile ?: UserProfile.default(today()))
+            }
 
         private val dayEntries: Flow<DayEntries> =
             selectedDate.flatMapLatest { day ->
@@ -107,15 +109,5 @@ class TodayViewModel
 
         private companion object {
             const val STOP_TIMEOUT_MS = 5_000L
-
-            // TODO: replaced by the real UserProfile once onboarding exists.
-            val DEFAULT_PROFILE = UserProfile(
-                sex = BiologicalSex.Female,
-                ageYears = 30,
-                heightCm = 180.0,
-                weightKg = 70.0,
-                activityLevel = ActivityLevel.Moderate,
-                goal = NutritionGoal.Maintain,
-            )
         }
     }
