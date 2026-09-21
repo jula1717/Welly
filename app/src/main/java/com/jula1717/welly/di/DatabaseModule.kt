@@ -3,8 +3,10 @@ package com.jula1717.welly.di
 import android.content.Context
 import androidx.room.Room
 import com.jula1717.welly.data.local.WellyDatabase
+import com.jula1717.welly.data.local.dao.ActivityDao
 import com.jula1717.welly.data.local.dao.DrinkDao
 import com.jula1717.welly.data.local.dao.MealDao
+import com.jula1717.welly.data.local.dao.WorkoutDao
 import com.jula1717.welly.data.repository.DrinkRepositoryImpl
 import com.jula1717.welly.data.repository.MealRepositoryImpl
 import com.jula1717.welly.data.repository.UserProfileRepositoryImpl
@@ -41,6 +43,12 @@ object DatabaseModule {
 
     @Provides
     fun provideDrinkDao(database: WellyDatabase): DrinkDao = database.drinkDao()
+
+    @Provides
+    fun provideActivityDao(database: WellyDatabase): ActivityDao = database.activityDao()
+
+    @Provides
+    fun provideWorkoutDao(database: WellyDatabase): WorkoutDao = database.workoutDao()
 }
 
 @Module
