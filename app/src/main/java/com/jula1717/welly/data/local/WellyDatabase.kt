@@ -13,7 +13,7 @@ import com.jula1717.welly.data.local.entity.WorkoutEntity
 
 @Database(
     entities = [MealEntity::class, DrinkEntity::class, ActivityEntity::class, WorkoutEntity::class],
-    version = 3,
+    version = 4,
     exportSchema = true,
 )
 abstract class WellyDatabase : RoomDatabase() {

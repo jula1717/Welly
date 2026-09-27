@@ -7,12 +7,16 @@ import com.jula1717.welly.data.local.dao.ActivityDao
 import com.jula1717.welly.data.local.dao.DrinkDao
 import com.jula1717.welly.data.local.dao.MealDao
 import com.jula1717.welly.data.local.dao.WorkoutDao
+import com.jula1717.welly.data.repository.ActivityRepositoryImpl
 import com.jula1717.welly.data.repository.DrinkRepositoryImpl
 import com.jula1717.welly.data.repository.MealRepositoryImpl
 import com.jula1717.welly.data.repository.UserProfileRepositoryImpl
+import com.jula1717.welly.data.repository.WorkoutRepositoryImpl
+import com.jula1717.welly.domain.repository.ActivityRepository
 import com.jula1717.welly.domain.repository.DrinkRepository
 import com.jula1717.welly.domain.repository.MealRepository
 import com.jula1717.welly.domain.repository.UserProfileRepository
+import com.jula1717.welly.domain.repository.WorkoutRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -65,4 +69,12 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindUserProfileRepository(impl: UserProfileRepositoryImpl): UserProfileRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindActivityRepository(impl: ActivityRepositoryImpl): ActivityRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindWorkoutRepository(impl: WorkoutRepositoryImpl): WorkoutRepository
 }

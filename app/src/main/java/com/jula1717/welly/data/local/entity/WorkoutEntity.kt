@@ -14,7 +14,7 @@ import com.jula1717.welly.data.local.entity.WorkoutEntity.Companion.COLUMN_ACTIV
             entity = ActivityEntity::class,
             parentColumns = [COLUMN_ID],
             childColumns = [COLUMN_ACTIVITY_ID],
-            onDelete = ForeignKey.CASCADE,
+            onDelete = ForeignKey.RESTRICT,
         ),
     ],
     indices = [Index(COLUMN_ACTIVITY_ID)],

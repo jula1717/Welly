@@ -10,6 +10,7 @@ data class ActivityEntity(
     val id: Long = 0L,
     val name: String,
     val type: ActivityType,
+    val isArchived: Boolean = false,
 ) {
     companion object {
         const val TABLE_NAME = "activities"
