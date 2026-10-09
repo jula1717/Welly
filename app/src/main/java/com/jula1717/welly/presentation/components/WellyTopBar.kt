@@ -1,6 +1,7 @@
 package com.jula1717.welly.presentation.components
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -44,6 +45,7 @@ internal fun WellyTopBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.background,
         ),
+        windowInsets = WindowInsets(0),
     )
 }
 

@@ -6,10 +6,12 @@ import com.jula1717.welly.domain.model.DailyTargets
 import com.jula1717.welly.domain.model.Drink
 import com.jula1717.welly.domain.model.Meal
 import com.jula1717.welly.domain.model.UserProfile
+import com.jula1717.welly.domain.model.Workout
 import com.jula1717.welly.domain.usecase.CalculateDailyIntakeTotalsUseCase
 import com.jula1717.welly.domain.usecase.CalculateDailyTargetsUseCase
 import com.jula1717.welly.domain.usecase.GetDrinksForDayUseCase
 import com.jula1717.welly.domain.usecase.GetMealsForDayUseCase
+import com.jula1717.welly.domain.usecase.GetWorkoutsForDayUseCase
 import com.jula1717.welly.domain.usecase.ObserveUserProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -33,6 +35,7 @@ class TodayViewModel
     constructor(
         getMealsForDayUseCase: GetMealsForDayUseCase,
         getDrinksForDayUseCase: GetDrinksForDayUseCase,
+        getWorkoutsForDayUseCase: GetWorkoutsForDayUseCase,
         observeUserProfileUseCase: ObserveUserProfileUseCase,
         calculateDailyTargetsUseCase: CalculateDailyTargetsUseCase,
         private val calculateDailyIntakeTotals: CalculateDailyIntakeTotalsUseCase,
@@ -58,18 +61,20 @@ class TodayViewModel
                 combine(
                     getMealsForDayUseCase(day),
                     getDrinksForDayUseCase(day),
-                ) { meals, drinks -> DayEntries(day, meals, drinks) }
+                    getWorkoutsForDayUseCase(day),
+                ) { meals, drinks, workouts -> DayEntries(day, meals, drinks, workouts) }
             }
 
         val uiState: StateFlow<TodayUiState> =
-            combine(dayEntries, targets, currentDay) { (day, meals, drinks), targets, today ->
+            combine(dayEntries, targets, currentDay) { entries, targets, today ->
                 TodayUiState(
-                    date = day,
+                    date = entries.date,
                     maxSelectableDate = today,
                     targets = targets,
-                    entries = todayEntries(meals, drinks),
-                    totals = calculateDailyIntakeTotals(meals, drinks),
-                    canGoToNextDay = canGoToNextDay(day, today),
+                    nutritionEntries = nutritionEntries(entries.meals, entries.drinks),
+                    workoutEntries = workoutEntries(entries.workouts),
+                    totals = calculateDailyIntakeTotals(entries.meals, entries.drinks),
+                    canGoToNextDay = canGoToNextDay(entries.date, today),
                 )
             }.stateIn(
                 scope = viewModelScope,
@@ -105,6 +110,7 @@ class TodayViewModel
             val date: LocalDate,
             val meals: List<Meal>,
             val drinks: List<Drink>,
+            val workouts: List<Workout>,
         )
 
         private companion object {

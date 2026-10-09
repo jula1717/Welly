@@ -39,8 +39,8 @@ import com.jula1717.welly.domain.model.MealMacros
 import com.jula1717.welly.domain.model.MealType
 import com.jula1717.welly.presentation.components.AiMacroCard
 import com.jula1717.welly.presentation.components.DateTimeCard
-import com.jula1717.welly.presentation.components.MealTypeChip
 import com.jula1717.welly.presentation.components.SaveButton
+import com.jula1717.welly.presentation.components.TypeChip
 import com.jula1717.welly.presentation.components.WellyDatePickerDialog
 import com.jula1717.welly.presentation.components.WellyTimePickerDialog
 import com.jula1717.welly.presentation.components.WellyTopBar
@@ -163,7 +163,7 @@ internal fun AddMealScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 MealType.entries.forEach { type ->
-                    MealTypeChip(
+                    TypeChip(
                         label = stringResource(type.titleResId),
                         selected = type == selectedType,
                         onClick = { onEvent(AddMealUiEvent.OnTypeChanged(type)) },

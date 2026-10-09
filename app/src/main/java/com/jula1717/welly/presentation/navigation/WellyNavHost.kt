@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -44,26 +45,45 @@ fun WellyNavHost(
             startDestination = TodayDestination,
             modifier = Modifier.padding(innerPadding),
         ) {
-            profileDestination(
-                onBack = { navController.popBackStack() },
-            )
-
-            todayDestination(
-                onAddMeal = { navController.navigateToAddMeal() },
-                onAddDrink = { navController.navigateToAddDrink() },
-                onOpenProfile = { navController.navigateToProfile() },
-                onOpenSettings = {}, //TODO: Implement settings navigation after settings screen is implemented
-            )
-
-            addMealDestination(
-                onBack = { navController.popBackStack() },
-            )
-
-            addDrinkDestination(
-                onBack = { navController.popBackStack() },
-            )
-
-            statsDestination()
+            wellyGraph(navController)
         }
     }
+}
+
+private fun NavGraphBuilder.wellyGraph(navController: NavHostController) {
+    profileDestination(
+        onBack = { navController.popBackStack() },
+    )
+
+    todayDestination(
+        onAddMeal = { navController.navigateToAddMeal() },
+        onAddDrink = { navController.navigateToAddDrink() },
+        onAddWorkout = { navController.navigateToAddWorkout() },
+        onOpenProfile = { navController.navigateToProfile() },
+        onOpenSettings = { navController.navigateToSettings() },
+    )
+
+    settingsDestination(
+        onBack = { navController.popBackStack() },
+        onOpenProfile = { navController.navigateToProfile() },
+        onOpenActivities = { navController.navigateToActivities() },
+    )
+
+    activitiesDestination(
+        onBack = { navController.popBackStack() },
+    )
+
+    addWorkoutDestination(
+        onBack = { navController.popBackStack() },
+    )
+
+    addMealDestination(
+        onBack = { navController.popBackStack() },
+    )
+
+    addDrinkDestination(
+        onBack = { navController.popBackStack() },
+    )
+
+    statsDestination()
 }

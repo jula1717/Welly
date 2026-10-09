@@ -1,5 +1,6 @@
 package com.jula1717.welly.presentation.today
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -38,6 +40,7 @@ import java.time.LocalDate
 fun TodayDestination(
     onAddMeal: () -> Unit,
     onAddDrink: () -> Unit,
+    onAddWorkout: () -> Unit,
     onOpenProfile: () -> Unit,
     onOpenSettings: (() -> Unit),
     modifier: Modifier = Modifier,
@@ -55,6 +58,7 @@ fun TodayDestination(
         onEvent = viewModel::onEvent,
         onAddMeal = onAddMeal,
         onAddDrink = onAddDrink,
+        onAddWorkout = onAddWorkout,
         onOpenProfile = onOpenProfile,
         onOpenSettings = onOpenSettings,
         modifier = modifier,
@@ -67,6 +71,7 @@ internal fun TodayScreen(
     onEvent: (TodayUiEvent) -> Unit,
     onAddMeal: () -> Unit,
     onAddDrink: () -> Unit,
+    onAddWorkout: () -> Unit,
     onOpenProfile: () -> Unit,
     onOpenSettings: (() -> Unit),
     modifier: Modifier = Modifier,
@@ -160,18 +165,16 @@ internal fun TodayScreen(
                     )
                 }
 
-                item {
-                    Text(
-                        text = stringResource(R.string.today_entries_count, state.entries.size),
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        modifier = Modifier.padding(top = 6.dp, bottom = 2.dp),
-                    )
-                }
+                entriesSection(
+                    titleRes = R.string.today_nutrition_entries_count,
+                    entries = state.nutritionEntries,
+                )
 
-                items(state.entries, key = { it.key }) { entry ->
-                    DailyEntryItem(entry = entry)
+                if (state.workoutEntries.isNotEmpty()) {
+                    entriesSection(
+                        titleRes = R.string.today_workout_entries_count,
+                        entries = state.workoutEntries,
+                    )
                 }
             }
         }
@@ -186,10 +189,30 @@ internal fun TodayScreen(
             onExpandedChange = { fabExpanded = it },
             onAddMeal = onAddMeal,
             onAddDrink = onAddDrink,
+            onAddWorkout = onAddWorkout,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(end = 20.dp, bottom = 16.dp),
         )
+    }
+}
+
+private fun LazyListScope.entriesSection(
+    @StringRes titleRes: Int,
+    entries: List<TodayEntry>,
+) {
+    item(key = titleRes) {
+        Text(
+            text = stringResource(titleRes, entries.size),
+            fontSize = 13.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.padding(top = 6.dp, bottom = 2.dp),
+        )
+    }
+
+    items(entries, key = { it.key }) { entry ->
+        DailyEntryItem(entry = entry)
     }
 }
 
@@ -206,6 +229,7 @@ private fun TodayScreenPreview() {
             onEvent = {},
             onAddMeal = {},
             onAddDrink = {},
+            onAddWorkout = {},
             onOpenProfile = {},
             onOpenSettings = {},
         )

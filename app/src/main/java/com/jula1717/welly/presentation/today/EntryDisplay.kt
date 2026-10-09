@@ -22,6 +22,11 @@ internal fun TodayEntry.toEntryDisplay(): EntryDisplay =
             typeLabel = stringResource(R.string.today_add_drink),
             description = drinkDescription(this),
         )
+
+        is TodayEntry.WorkoutEntry -> EntryDisplay(
+            typeLabel = stringResource(R.string.workout_label),
+            description = activityName,
+        )
     }
 
 @Composable

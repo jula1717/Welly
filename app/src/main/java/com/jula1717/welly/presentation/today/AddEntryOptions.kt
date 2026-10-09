@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -30,6 +31,7 @@ internal fun AddEntryOptions(
     visible: Boolean,
     onAddMeal: () -> Unit,
     onAddDrink: () -> Unit,
+    onAddWorkout: () -> Unit,
 ) {
     AnimatedVisibility(
         visible = visible,
@@ -59,6 +61,14 @@ internal fun AddEntryOptions(
                 onClick = onAddDrink,
                 modifier = Modifier.fillMaxWidth(),
             )
+            MiniFabOption(
+                icon = Icons.Filled.FitnessCenter,
+                label = stringResource(R.string.today_add_workout),
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                onClick = onAddWorkout,
+                modifier = Modifier.fillMaxWidth(),
+            )
         }
     }
 }
@@ -71,6 +81,7 @@ private fun AddEntryOptionsPreview() {
             visible = true,
             onAddMeal = {},
             onAddDrink = {},
+            onAddWorkout = {},
         )
     }
 }

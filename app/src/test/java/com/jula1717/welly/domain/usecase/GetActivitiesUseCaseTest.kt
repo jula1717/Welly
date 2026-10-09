@@ -2,9 +2,7 @@ package com.jula1717.welly.domain.usecase
 
 import com.jula1717.welly.domain.model.Activity
 import com.jula1717.welly.domain.model.ActivityType
-import com.jula1717.welly.domain.repository.ActivityRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.jula1717.welly.fake.FakeActivityRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -53,18 +51,4 @@ class GetActivitiesUseCaseTest {
         id: Long,
         name: String,
     ) = Activity(id = id, name = name, type = ActivityType.Cardio)
-
-    private class FakeActivityRepository(
-        initial: List<Activity>,
-    ) : ActivityRepository {
-        val activities = MutableStateFlow(initial)
-
-        override suspend fun addActivity(activity: Activity) = Unit
-
-        override suspend fun updateActivity(activity: Activity) = Unit
-
-        override suspend fun archiveActivity(id: Long) = Unit
-
-        override fun getActivities(): Flow<List<Activity>> = activities
-    }
 }

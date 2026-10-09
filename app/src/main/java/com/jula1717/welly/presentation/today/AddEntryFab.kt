@@ -27,6 +27,7 @@ internal fun AddEntryFab(
     onExpandedChange: (Boolean) -> Unit,
     onAddMeal: () -> Unit,
     onAddDrink: () -> Unit,
+    onAddWorkout: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -43,6 +44,10 @@ internal fun AddEntryFab(
             onAddDrink = {
                 onExpandedChange(false)
                 onAddDrink()
+            },
+            onAddWorkout = {
+                onExpandedChange(false)
+                onAddWorkout()
             },
         )
 
@@ -93,6 +98,7 @@ private fun AddEntryFabCollapsedPreview() {
             onExpandedChange = {},
             onAddMeal = {},
             onAddDrink = {},
+            onAddWorkout = {},
         )
     }
 }
@@ -106,6 +112,7 @@ private fun AddEntryFabExpandedPreview() {
             onExpandedChange = {},
             onAddMeal = {},
             onAddDrink = {},
+            onAddWorkout = {},
         )
     }
 }

@@ -97,7 +97,8 @@
     <string name="today_water_progress">%1$d / %2$d ml</string>
     <string name="today_drink_amount_label">%1$d ml</string>
     <string name="today_drink_description_with_amount">%1$s (%2$d ml)</string>
-    <string name="today_entries_count">Entries — %1$d</string>
+    <string name="today_nutrition_entries_count">Meals &amp; drinks — %1$d</string>
+    <string name="today_workout_entries_count">Workouts — %1$d</string>
     <string name="unit_kcal">kcal</string>
     <string name="unit_g">g</string>
     <string name="kcal_amount">%1$d kcal</string>
@@ -113,6 +114,40 @@
     <string name="cd_wheel_min">minimum</string>
     <string name="cd_wheel_max">maximum</string>
     <string name="cd_labeled_field">%1$s: %2$s</string>
+
+    <string name="today_add_workout">Workout</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_profile_title">Profile details</string>
+    <string name="settings_profile_subtitle">Date of birth, height, weight, goals</string>
+    <string name="settings_activities_title">Sport activities</string>
+    <plurals name="settings_activities_count">
+        <item quantity="one">%1$d activity on the list</item>
+        <item quantity="other">%1$d activities on the list</item>
+    </plurals>
+
+    <string name="activity_type_cardio">Cardio</string>
+    <string name="activity_type_strength">Strength</string>
+    <string name="activity_type_all">All</string>
+
+    <string name="activities_title">Sport activities</string>
+    <string name="activities_intro">The list you pick from when adding a workout.</string>
+    <string name="activities_empty">No activities yet. Add your first one below.</string>
+    <string name="activities_add">Add activity</string>
+    <string name="activities_edit">Edit activity</string>
+    <string name="activities_name_label">Name</string>
+    <string name="activities_type_label">Type</string>
+    <string name="activities_delete_action">Delete</string>
+    <string name="activities_delete_title">Delete \"%1$s\"?</string>
+    <string name="activities_delete_body">It will disappear from the list. Workouts you already logged stay in your history.</string>
+
+    <string name="add_workout_title">Add workout</string>
+    <string name="add_workout_type_label">Type</string>
+    <string name="add_workout_activity_label">Activity</string>
+    <string name="add_workout_no_activities">You don\'t have any activities yet.</string>
+    <string name="add_workout_no_activities_of_type">No activities of this type.</string>
+
+    <string name="workout_label">Workout</string>
 
     <string name="save">Save</string>
     <string name="ok">OK</string>

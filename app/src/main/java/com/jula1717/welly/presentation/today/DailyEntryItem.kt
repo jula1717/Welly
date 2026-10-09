@@ -22,7 +22,9 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jula1717.welly.R
+import com.jula1717.welly.domain.model.ActivityType
 import com.jula1717.welly.domain.model.MealType
+import com.jula1717.welly.presentation.components.ActivityTypeChip
 import com.jula1717.welly.presentation.util.TIME_DISPLAY_FORMAT
 import com.jula1717.welly.ui.theme.WellyTheme
 import java.time.LocalTime
@@ -68,13 +70,22 @@ internal fun DailyEntryItem(
             )
         }
 
-        Text(
-            text = stringResource(R.string.kcal_amount, entry.calories),
-            fontSize = 13.sp,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
+        when (entry) {
+            is TodayEntry.MealEntry -> EntryCalories(entry.calories)
+            is TodayEntry.DrinkEntry -> EntryCalories(entry.calories)
+            is TodayEntry.WorkoutEntry -> ActivityTypeChip(type = entry.activityType)
+        }
     }
+}
+
+@Composable
+private fun EntryCalories(calories: Int) {
+    Text(
+        text = stringResource(R.string.kcal_amount, calories),
+        fontSize = 13.sp,
+        fontWeight = FontWeight.Bold,
+        color = MaterialTheme.colorScheme.onSurface,
+    )
 }
 
 @Suppress("MagicNumber")
@@ -106,6 +117,22 @@ private fun DailyEntryItemDrinkPreview() {
                 amountMl = 330,
                 description = "Latte with 2% milk",
                 calories = 168,
+            ),
+        )
+    }
+}
+
+@Suppress("MagicNumber")
+@PreviewLightDark
+@Composable
+private fun DailyEntryItemWorkoutPreview() {
+    WellyTheme {
+        DailyEntryItem(
+            entry = TodayEntry.WorkoutEntry(
+                id = 1,
+                time = LocalTime.of(19, 30),
+                activityName = "Circuit training",
+                activityType = ActivityType.Cardio,
             ),
         )
     }

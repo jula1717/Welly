@@ -16,7 +16,7 @@ import com.jula1717.welly.ui.theme.WellyTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun MealTypeChip(
+internal fun TypeChip(
     label: String,
     selected: Boolean,
     onClick: () -> Unit,
@@ -53,9 +53,9 @@ internal fun MealTypeChip(
 
 @PreviewLightDark
 @Composable
-private fun MealTypeChipSelectedPreview() {
+private fun TypeChipSelectedPreview() {
     WellyTheme {
-        MealTypeChip(
+        TypeChip(
             label = "Breakfast",
             selected = true,
             onClick = {},
@@ -65,9 +65,9 @@ private fun MealTypeChipSelectedPreview() {
 
 @PreviewLightDark
 @Composable
-private fun MealTypeChipUnselectedPreview() {
+private fun TypeChipUnselectedPreview() {
     WellyTheme {
-        MealTypeChip(
+        TypeChip(
             label = "Breakfast",
             selected = false,
             onClick = {},

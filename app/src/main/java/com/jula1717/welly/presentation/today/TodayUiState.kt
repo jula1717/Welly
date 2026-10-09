@@ -8,7 +8,8 @@ data class TodayUiState(
     val date: LocalDate,
     val maxSelectableDate: LocalDate,
     val targets: DailyTargets,
-    val entries: List<TodayEntry> = emptyList(),
+    val nutritionEntries: List<TodayEntry> = emptyList(),
+    val workoutEntries: List<TodayEntry> = emptyList(),
     val totals: DailyIntakeTotals = DailyIntakeTotals.EMPTY,
     val canGoToNextDay: Boolean = false,
 )

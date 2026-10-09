@@ -16,6 +16,7 @@ fun NavController.navigateToToday() {
 fun NavGraphBuilder.todayDestination(
     onAddMeal: () -> Unit,
     onAddDrink: () -> Unit,
+    onAddWorkout: () -> Unit,
     onOpenProfile: () -> Unit,
     onOpenSettings: (() -> Unit),
 ) {
@@ -23,6 +24,7 @@ fun NavGraphBuilder.todayDestination(
         TodayDestination(
             onAddMeal = onAddMeal,
             onAddDrink = onAddDrink,
+            onAddWorkout = onAddWorkout,
             onOpenProfile = onOpenProfile,
             onOpenSettings = onOpenSettings,
         )
