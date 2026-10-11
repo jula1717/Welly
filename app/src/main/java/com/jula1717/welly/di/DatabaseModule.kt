@@ -5,15 +5,19 @@ import androidx.room.Room
 import com.jula1717.welly.data.local.WellyDatabase
 import com.jula1717.welly.data.local.dao.ActivityDao
 import com.jula1717.welly.data.local.dao.DrinkDao
+import com.jula1717.welly.data.local.dao.HabitCompletionDao
+import com.jula1717.welly.data.local.dao.HabitDao
 import com.jula1717.welly.data.local.dao.MealDao
 import com.jula1717.welly.data.local.dao.WorkoutDao
 import com.jula1717.welly.data.repository.ActivityRepositoryImpl
 import com.jula1717.welly.data.repository.DrinkRepositoryImpl
+import com.jula1717.welly.data.repository.HabitRepositoryImpl
 import com.jula1717.welly.data.repository.MealRepositoryImpl
 import com.jula1717.welly.data.repository.UserProfileRepositoryImpl
 import com.jula1717.welly.data.repository.WorkoutRepositoryImpl
 import com.jula1717.welly.domain.repository.ActivityRepository
 import com.jula1717.welly.domain.repository.DrinkRepository
+import com.jula1717.welly.domain.repository.HabitRepository
 import com.jula1717.welly.domain.repository.MealRepository
 import com.jula1717.welly.domain.repository.UserProfileRepository
 import com.jula1717.welly.domain.repository.WorkoutRepository
@@ -53,6 +57,12 @@ object DatabaseModule {
 
     @Provides
     fun provideWorkoutDao(database: WellyDatabase): WorkoutDao = database.workoutDao()
+
+    @Provides
+    fun provideHabitDao(database: WellyDatabase): HabitDao = database.habitDao()
+
+    @Provides
+    fun provideHabitCompletionDao(database: WellyDatabase): HabitCompletionDao = database.habitCompletionDao()
 }
 
 @Module
@@ -77,4 +87,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindWorkoutRepository(impl: WorkoutRepositoryImpl): WorkoutRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindHabitRepository(impl: HabitRepositoryImpl): HabitRepository
 }
