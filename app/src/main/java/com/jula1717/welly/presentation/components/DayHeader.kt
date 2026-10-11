@@ -1,4 +1,4 @@
-package com.jula1717.welly.presentation.today
+package com.jula1717.welly.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -37,7 +37,7 @@ internal fun DayHeader(
     onNextDay: () -> Unit,
     onDateClick: () -> Unit,
     onOpenProfile: () -> Unit,
-    onOpenSettings: (() -> Unit) = {},
+    onOpenSettings: (() -> Unit),
     modifier: Modifier = Modifier,
 ) {
     val locale = LocalLocale.current.platformLocale

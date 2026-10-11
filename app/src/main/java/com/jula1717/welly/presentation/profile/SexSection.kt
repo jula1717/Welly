@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.jula1717.welly.R
 import com.jula1717.welly.domain.model.BiologicalSex
+import com.jula1717.welly.presentation.components.SectionLabel
 import com.jula1717.welly.ui.theme.WellyTheme
 
 private val SEX_PILL_OPTIONS = listOf(BiologicalSex.Female, BiologicalSex.Male)

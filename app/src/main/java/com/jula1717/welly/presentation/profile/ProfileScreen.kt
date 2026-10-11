@@ -30,6 +30,7 @@ import com.jula1717.welly.R
 import com.jula1717.welly.domain.model.ActivityLevel
 import com.jula1717.welly.domain.model.BiologicalSex
 import com.jula1717.welly.domain.model.NutritionGoal
+import com.jula1717.welly.presentation.components.LabeledSection
 import com.jula1717.welly.presentation.components.SaveButton
 import com.jula1717.welly.presentation.components.WellyTopBar
 import com.jula1717.welly.ui.theme.WellyTheme

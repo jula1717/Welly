@@ -31,6 +31,7 @@ import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jula1717.welly.R
 import com.jula1717.welly.domain.model.DailyTargets
+import com.jula1717.welly.presentation.components.DayHeader
 import com.jula1717.welly.presentation.components.MacroType
 import com.jula1717.welly.presentation.components.WellyDatePickerDialog
 import com.jula1717.welly.ui.theme.WellyTheme

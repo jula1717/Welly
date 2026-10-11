@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.jula1717.welly.R
 import com.jula1717.welly.domain.model.ActivityLevel
 import com.jula1717.welly.domain.model.NutritionGoal
+import com.jula1717.welly.presentation.components.LabeledSection
 import com.jula1717.welly.ui.theme.WellyTheme
 
 @Composable

@@ -1,4 +1,4 @@
-package com.jula1717.welly.presentation.profile
+package com.jula1717.welly.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
