@@ -3,7 +3,7 @@ package com.jula1717.welly.data.repository
 import com.jula1717.welly.data.local.dao.MealDao
 import com.jula1717.welly.data.local.mapper.toDomain
 import com.jula1717.welly.data.local.mapper.toEntity
-import com.jula1717.welly.data.local.util.toDayEpochSecondRange
+import com.jula1717.welly.data.local.util.toEpochSecondRange
 import com.jula1717.welly.domain.model.Meal
 import com.jula1717.welly.domain.repository.MealRepository
 import kotlinx.coroutines.flow.Flow
@@ -20,9 +20,9 @@ class MealRepositoryImpl
             mealDao.insertMeal(meal.toEntity())
         }
 
-        override fun getMealsForDay(date: LocalDate): Flow<List<Meal>> {
-            val (startOfDay, endOfDay) = date.toDayEpochSecondRange()
-            return mealDao.getMealsForDay(startOfDay, endOfDay).map { entities ->
+        override fun getMealsInRange(range: ClosedRange<LocalDate>): Flow<List<Meal>> {
+            val (start, end) = range.toEpochSecondRange()
+            return mealDao.getMealsInRange(start, end).map { entities ->
                 entities.map { it.toDomain() }
             }
         }

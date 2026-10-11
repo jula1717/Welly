@@ -3,7 +3,7 @@ package com.jula1717.welly.data.repository
 import com.jula1717.welly.data.local.dao.DrinkDao
 import com.jula1717.welly.data.local.mapper.toDomain
 import com.jula1717.welly.data.local.mapper.toEntity
-import com.jula1717.welly.data.local.util.toDayEpochSecondRange
+import com.jula1717.welly.data.local.util.toEpochSecondRange
 import com.jula1717.welly.domain.model.Drink
 import com.jula1717.welly.domain.repository.DrinkRepository
 import kotlinx.coroutines.flow.Flow
@@ -20,9 +20,9 @@ class DrinkRepositoryImpl
             drinkDao.insertDrink(drink.toEntity())
         }
 
-        override fun getDrinksForDay(date: LocalDate): Flow<List<Drink>> {
-            val (startOfDay, endOfDay) = date.toDayEpochSecondRange()
-            return drinkDao.getDrinksForDay(startOfDay, endOfDay).map { entities ->
+        override fun getDrinksInRange(range: ClosedRange<LocalDate>): Flow<List<Drink>> {
+            val (start, end) = range.toEpochSecondRange()
+            return drinkDao.getDrinksInRange(start, end).map { entities ->
                 entities.map { it.toDomain() }
             }
         }

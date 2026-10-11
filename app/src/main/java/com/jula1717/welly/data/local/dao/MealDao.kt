@@ -11,9 +11,9 @@ interface MealDao {
     @Insert
     suspend fun insertMeal(meal: MealEntity)
 
-    @Query("SELECT * FROM meals WHERE dateTimeEpochSecond BETWEEN :startOfDayEpoch AND :endOfDayEpoch")
-    fun getMealsForDay(
-        startOfDayEpoch: Long,
-        endOfDayEpoch: Long,
+    @Query("SELECT * FROM meals WHERE dateTimeEpochSecond BETWEEN :startEpoch AND :endEpoch")
+    fun getMealsInRange(
+        startEpoch: Long,
+        endEpoch: Long,
     ): Flow<List<MealEntity>>
 }

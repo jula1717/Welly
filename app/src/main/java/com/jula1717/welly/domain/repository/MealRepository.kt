@@ -7,5 +7,5 @@ import java.time.LocalDate
 interface MealRepository {
     suspend fun addMeal(meal: Meal)
 
-    fun getMealsForDay(date: LocalDate): Flow<List<Meal>>
+    fun getMealsInRange(range: ClosedRange<LocalDate>): Flow<List<Meal>>
 }

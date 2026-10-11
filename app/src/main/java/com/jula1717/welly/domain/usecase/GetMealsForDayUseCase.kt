@@ -11,5 +11,5 @@ class GetMealsForDayUseCase
     constructor(
         private val repository: MealRepository,
     ) {
-        operator fun invoke(date: LocalDate): Flow<List<Meal>> = repository.getMealsForDay(date)
+        operator fun invoke(date: LocalDate): Flow<List<Meal>> = repository.getMealsInRange(date..date)
     }

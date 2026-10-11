@@ -11,9 +11,9 @@ interface DrinkDao {
     @Insert
     suspend fun insertDrink(drink: DrinkEntity)
 
-    @Query("SELECT * FROM drinks WHERE dateTimeEpochSecond BETWEEN :startOfDayEpoch AND :endOfDayEpoch")
-    fun getDrinksForDay(
-        startOfDayEpoch: Long,
-        endOfDayEpoch: Long,
+    @Query("SELECT * FROM drinks WHERE dateTimeEpochSecond BETWEEN :startEpoch AND :endEpoch")
+    fun getDrinksInRange(
+        startEpoch: Long,
+        endEpoch: Long,
     ): Flow<List<DrinkEntity>>
 }

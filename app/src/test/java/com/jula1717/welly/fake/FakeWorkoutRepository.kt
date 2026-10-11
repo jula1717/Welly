@@ -19,6 +19,6 @@ class FakeWorkoutRepository(
         added += activityId to dateTime
     }
 
-    override fun getWorkoutsForDay(date: LocalDate): Flow<List<Workout>> =
-        flowOf(workouts.filter { it.dateTime.toLocalDate() == date })
+    override fun getWorkoutsInRange(range: ClosedRange<LocalDate>): Flow<List<Workout>> =
+        flowOf(workouts.filter { it.dateTime.toLocalDate() in range })
 }

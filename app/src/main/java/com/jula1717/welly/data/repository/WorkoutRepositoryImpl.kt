@@ -3,7 +3,7 @@ package com.jula1717.welly.data.repository
 import com.jula1717.welly.data.local.dao.WorkoutDao
 import com.jula1717.welly.data.local.entity.WorkoutEntity
 import com.jula1717.welly.data.local.mapper.toDomain
-import com.jula1717.welly.data.local.util.toDayEpochSecondRange
+import com.jula1717.welly.data.local.util.toEpochSecondRange
 import com.jula1717.welly.domain.model.Workout
 import com.jula1717.welly.domain.repository.WorkoutRepository
 import kotlinx.coroutines.flow.Flow
@@ -30,9 +30,9 @@ class WorkoutRepositoryImpl
             )
         }
 
-        override fun getWorkoutsForDay(date: LocalDate): Flow<List<Workout>> {
-            val (startOfDay, endOfDay) = date.toDayEpochSecondRange()
-            return workoutDao.getWorkoutsForDay(startOfDay, endOfDay).map { relations ->
+        override fun getWorkoutsInRange(range: ClosedRange<LocalDate>): Flow<List<Workout>> {
+            val (start, end) = range.toEpochSecondRange()
+            return workoutDao.getWorkoutsInRange(start, end).map { relations ->
                 relations.map { it.toDomain() }
             }
         }

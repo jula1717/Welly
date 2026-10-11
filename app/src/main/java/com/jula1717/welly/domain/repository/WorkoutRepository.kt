@@ -11,5 +11,5 @@ interface WorkoutRepository {
         dateTime: LocalDateTime,
     )
 
-    fun getWorkoutsForDay(date: LocalDate): Flow<List<Workout>>
+    fun getWorkoutsInRange(range: ClosedRange<LocalDate>): Flow<List<Workout>>
 }

@@ -11,5 +11,5 @@ class GetWorkoutsForDayUseCase
     constructor(
         private val repository: WorkoutRepository,
     ) {
-        operator fun invoke(date: LocalDate): Flow<List<Workout>> = repository.getWorkoutsForDay(date)
+        operator fun invoke(date: LocalDate): Flow<List<Workout>> = repository.getWorkoutsInRange(date..date)
     }

@@ -14,9 +14,9 @@ interface WorkoutDao {
     suspend fun insert(workout: WorkoutEntity)
 
     @Transaction
-    @Query("SELECT * FROM workouts WHERE dateTimeEpochSecond BETWEEN :startOfDayEpoch AND :endOfDayEpoch")
-    fun getWorkoutsForDay(
-        startOfDayEpoch: Long,
-        endOfDayEpoch: Long,
+    @Query("SELECT * FROM workouts WHERE dateTimeEpochSecond BETWEEN :startEpoch AND :endEpoch")
+    fun getWorkoutsInRange(
+        startEpoch: Long,
+        endEpoch: Long,
     ): Flow<List<WorkoutWithActivity>>
 }
