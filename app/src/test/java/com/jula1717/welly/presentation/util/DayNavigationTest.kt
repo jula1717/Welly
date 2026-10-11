@@ -1,4 +1,4 @@
-package com.jula1717.welly.presentation.today
+package com.jula1717.welly.presentation.util
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse

@@ -13,6 +13,9 @@ import com.jula1717.welly.domain.usecase.GetDrinksForDayUseCase
 import com.jula1717.welly.domain.usecase.GetMealsForDayUseCase
 import com.jula1717.welly.domain.usecase.GetWorkoutsForDayUseCase
 import com.jula1717.welly.domain.usecase.ObserveUserProfileUseCase
+import com.jula1717.welly.presentation.util.canGoToNextDay
+import com.jula1717.welly.presentation.util.coerceNotFuture
+import com.jula1717.welly.presentation.util.nextDay
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
