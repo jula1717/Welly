@@ -10,6 +10,10 @@ interface HabitRepository {
 
     fun getHabit(id: Long): Flow<Habit?>
 
+    suspend fun findHabits(): List<Habit>
+
+    suspend fun findHabit(id: Long): Habit?
+
     suspend fun addHabit(habit: Habit)
 
     suspend fun updateHabit(habit: Habit)

@@ -24,6 +24,10 @@ class HabitRepositoryImpl
 
         override fun getHabit(id: Long): Flow<Habit?> = habitDao.getHabit(id).map { it?.toDomain() }
 
+        override suspend fun findHabits(): List<Habit> = habitDao.findHabits().map { it.toDomain() }
+
+        override suspend fun findHabit(id: Long): Habit? = habitDao.findHabit(id)?.toDomain()
+
         override suspend fun addHabit(habit: Habit) {
             habitDao.insert(habit.toEntity())
         }

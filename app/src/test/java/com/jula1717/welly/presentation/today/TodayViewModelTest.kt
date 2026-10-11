@@ -9,9 +9,6 @@ import com.jula1717.welly.domain.model.MealMacros
 import com.jula1717.welly.domain.model.MealType
 import com.jula1717.welly.domain.model.UserProfile
 import com.jula1717.welly.domain.model.Workout
-import com.jula1717.welly.domain.repository.DrinkRepository
-import com.jula1717.welly.domain.repository.MealRepository
-import com.jula1717.welly.domain.repository.UserProfileRepository
 import com.jula1717.welly.domain.usecase.CalculateBmrUseCase
 import com.jula1717.welly.domain.usecase.CalculateDailyIntakeTotalsUseCase
 import com.jula1717.welly.domain.usecase.CalculateDailyTargetsUseCase
@@ -19,9 +16,10 @@ import com.jula1717.welly.domain.usecase.GetDrinksForDayUseCase
 import com.jula1717.welly.domain.usecase.GetMealsForDayUseCase
 import com.jula1717.welly.domain.usecase.GetWorkoutsForDayUseCase
 import com.jula1717.welly.domain.usecase.ObserveUserProfileUseCase
+import com.jula1717.welly.fake.FakeDrinkRepository
+import com.jula1717.welly.fake.FakeMealRepository
+import com.jula1717.welly.fake.FakeUserProfileRepository
 import com.jula1717.welly.fake.FakeWorkoutRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -207,31 +205,5 @@ class TodayViewModelTest {
         override fun withZone(zone: ZoneId): Clock = MutableClock(instant, zone)
 
         override fun instant(): Instant = instant
-    }
-
-    private class FakeMealRepository(
-        private val meals: List<Meal>,
-    ) : MealRepository {
-        override suspend fun addMeal(meal: Meal) = Unit
-
-        override fun getMealsForDay(date: LocalDate): Flow<List<Meal>> =
-            flowOf(meals.filter { it.dateTime.toLocalDate() == date })
-    }
-
-    private class FakeDrinkRepository(
-        private val drinks: List<Drink>,
-    ) : DrinkRepository {
-        override suspend fun addDrink(drink: Drink) = Unit
-
-        override fun getDrinksForDay(date: LocalDate): Flow<List<Drink>> =
-            flowOf(drinks.filter { it.dateTime.toLocalDate() == date })
-    }
-
-    private class FakeUserProfileRepository(
-        private val profile: UserProfile?,
-    ) : UserProfileRepository {
-        override fun observeProfile(): Flow<UserProfile?> = flowOf(profile)
-
-        override suspend fun updateProfile(profile: UserProfile) = Unit
     }
 }
