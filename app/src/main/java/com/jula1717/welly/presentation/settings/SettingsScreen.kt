@@ -10,6 +10,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FitnessCenter
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.TaskAlt
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,6 +30,7 @@ fun SettingsDestination(
     onBack: () -> Unit,
     onOpenProfile: () -> Unit,
     onOpenActivities: () -> Unit,
+    onOpenBuiltInHabits: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
@@ -39,6 +41,7 @@ fun SettingsDestination(
         onBack = onBack,
         onOpenProfile = onOpenProfile,
         onOpenActivities = onOpenActivities,
+        onOpenBuiltInHabits = onOpenBuiltInHabits,
         modifier = modifier,
     )
 }
@@ -49,6 +52,7 @@ internal fun SettingsScreen(
     onBack: () -> Unit,
     onOpenProfile: () -> Unit,
     onOpenActivities: () -> Unit,
+    onOpenBuiltInHabits: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -83,6 +87,17 @@ internal fun SettingsScreen(
                 ),
                 onClick = onOpenActivities,
             )
+
+            SettingsRow(
+                icon = Icons.Outlined.TaskAlt,
+                title = stringResource(R.string.settings_habits_section),
+                subtitle = stringResource(
+                    R.string.settings_habits_enabled_count,
+                    state.enabledBuiltInHabits,
+                    state.builtInHabitsCount,
+                ),
+                onClick = onOpenBuiltInHabits,
+            )
         }
     }
 }
@@ -92,10 +107,11 @@ internal fun SettingsScreen(
 private fun SettingsScreenPreview() {
     WellyTheme {
         SettingsScreen(
-            state = SettingsUiState(activityCount = 8),
+            state = SettingsUiState(activityCount = 8, enabledBuiltInHabits = 3, builtInHabitsCount = 4),
             onBack = {},
             onOpenProfile = {},
             onOpenActivities = {},
+            onOpenBuiltInHabits = {},
         )
     }
 }

@@ -22,47 +22,50 @@ class GetHabitPeriodUseCaseTest {
     }
 
     @Test
-    fun `multi-day periods are chained from the start date`() {
-        val habit = testHabit(frequency = frequency(HabitPeriodUnit.Day, 3), startDate = LocalDate.of(2026, 10, 1))
+    fun `a period counted in days is the window of days ending on the date`() {
+        val habit = testHabit(frequency = frequency(HabitPeriodUnit.Day, 3))
 
-        assertEquals(LocalDate.of(2026, 10, 7)..LocalDate.of(2026, 10, 9), useCase(habit, LocalDate.of(2026, 10, 8)))
+        assertEquals(LocalDate.of(2026, 10, 6)..LocalDate.of(2026, 10, 8), useCase(habit, LocalDate.of(2026, 10, 8)))
     }
 
     @Test
-    fun `multi-day periods also cover days before the start date`() {
-        val habit = testHabit(frequency = frequency(HabitPeriodUnit.Day, 3), startDate = LocalDate.of(2026, 10, 10))
-
-        assertEquals(LocalDate.of(2026, 10, 7)..LocalDate.of(2026, 10, 9), useCase(habit, LocalDate.of(2026, 10, 8)))
-    }
-
-    @Test
-    fun `weekly period runs from monday to sunday`() {
+    fun `a week is the last seven days, not the calendar week`() {
         val period = useCase(testHabit(frequency = HabitFrequency.Weekly), HABIT_TODAY)
 
-        assertEquals(LocalDate.of(2026, 10, 12)..LocalDate.of(2026, 10, 18), period)
+        assertEquals(LocalDate.of(2026, 10, 9)..HABIT_TODAY, period)
     }
 
     @Test
-    fun `two-week periods are chained from the week of the start date`() {
-        val habit = testHabit(frequency = frequency(HabitPeriodUnit.Week, 2), startDate = LocalDate.of(2026, 10, 14))
+    fun `a week does not reset on monday`() {
+        val habit = testHabit(frequency = HabitFrequency.Weekly)
+        val monday = HABIT_MONDAY
 
-        assertEquals(LocalDate.of(2026, 10, 12)..LocalDate.of(2026, 10, 25), useCase(habit, HABIT_TODAY))
-        assertEquals(LocalDate.of(2026, 10, 26)..LocalDate.of(2026, 11, 8), useCase(habit, LocalDate.of(2026, 10, 27)))
+        assertEquals(monday.minusDays(6)..monday, useCase(habit, monday))
     }
 
     @Test
-    fun `monthly period is the calendar month`() {
+    fun `a month is the last thirty days, not the calendar month`() {
         val habit = testHabit(frequency = frequency(HabitPeriodUnit.Month))
 
-        assertEquals(LocalDate.of(2026, 10, 1)..LocalDate.of(2026, 10, 31), useCase(habit, HABIT_TODAY))
-        assertEquals(LocalDate.of(2026, 2, 1)..LocalDate.of(2026, 2, 28), useCase(habit, LocalDate.of(2026, 2, 10)))
+        assertEquals(LocalDate.of(2026, 9, 16)..HABIT_TODAY, useCase(habit, HABIT_TODAY))
+        assertEquals(LocalDate.of(2026, 10, 3)..LocalDate.of(2026, 11, 1), useCase(habit, LocalDate.of(2026, 11, 1)))
     }
 
     @Test
-    fun `multi-month periods are chained from the month of the start date`() {
-        val habit = testHabit(frequency = frequency(HabitPeriodUnit.Month, 3), startDate = LocalDate.of(2026, 10, 20))
+    fun `several weeks or months multiply the window`() {
+        val twoWeeks = testHabit(frequency = frequency(HabitPeriodUnit.Week, 2))
+        val twoMonths = testHabit(frequency = frequency(HabitPeriodUnit.Month, 2))
 
-        assertEquals(LocalDate.of(2026, 10, 1)..LocalDate.of(2026, 12, 31), useCase(habit, LocalDate.of(2026, 12, 31)))
-        assertEquals(LocalDate.of(2027, 1, 1)..LocalDate.of(2027, 3, 31), useCase(habit, LocalDate.of(2027, 1, 1)))
+        assertEquals(HABIT_TODAY.minusDays(13)..HABIT_TODAY, useCase(twoWeeks, HABIT_TODAY))
+        assertEquals(HABIT_TODAY.minusDays(59)..HABIT_TODAY, useCase(twoMonths, HABIT_TODAY))
+    }
+
+    @Test
+    fun `the window does not depend on the start date`() {
+        val early = testHabit(frequency = frequency(HabitPeriodUnit.Day, 5), startDate = LocalDate.of(2026, 1, 1))
+        val late = testHabit(frequency = frequency(HabitPeriodUnit.Day, 5), startDate = LocalDate.of(2026, 10, 14))
+
+        assertEquals(useCase(early, HABIT_TODAY), useCase(late, HABIT_TODAY))
+        assertEquals(LocalDate.of(2026, 10, 11)..HABIT_TODAY, useCase(late, HABIT_TODAY))
     }
 }

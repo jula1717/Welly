@@ -3,12 +3,14 @@ package com.jula1717.welly.domain.usecase
 import com.jula1717.welly.domain.model.Habit
 import com.jula1717.welly.domain.model.HabitDayLog
 import com.jula1717.welly.domain.model.HabitMonthCount
+import com.jula1717.welly.domain.model.HabitRate
 import com.jula1717.welly.domain.model.HabitStats
 import com.jula1717.welly.domain.util.dates
 import java.time.LocalDate
 import java.time.YearMonth
+import java.time.temporal.ChronoUnit
 import javax.inject.Inject
-import kotlin.math.roundToInt
+import kotlin.math.ceil
 
 class CalculateHabitStatsUseCase
     @Inject
@@ -29,35 +31,35 @@ class CalculateHabitStatsUseCase
             logs: Map<LocalDate, HabitDayLog>,
             today: LocalDate,
         ): HabitStats {
-            val finished = finishedPeriods(habit, logs, today)
+            val finished = finishedDays(habit, logs, today)
             return HabitStats(
                 currentStreak = finished.takeLastWhile { it.met }.size,
                 longestStreak = longestRun(finished),
-                rateLast7Days = rate(finished, today, WEEK_DAYS),
-                rateLast30Days = rate(finished, today, MONTH_DAYS),
+                rateLast7Days = rate(habit, logs, today, WEEK_DAYS),
+                rateLast30Days = rate(habit, logs, today, MONTH_DAYS),
                 monthlyCounts = monthlyCounts(logs, today),
                 days = calculateDayStates(habit, logs, statsRange(habit, today), today),
+                firstCompletion = logs.filterValues { it.count > 0 }.keys.minOrNull(),
             )
         }
 
-        private fun finishedPeriods(
+        private fun finishedDays(
             habit: Habit,
             logs: Map<LocalDate, HabitDayLog>,
             today: LocalDate,
-        ): List<PeriodResult> =
-            generateSequence(getPeriod(habit, trackingStart(habit, today))) { period ->
-                getPeriod(habit, period.endInclusive.plusDays(1))
-            }.takeWhile { it.start <= today }
-                .map { period ->
-                    val total = period.dates().sumOf { logs[it]?.count ?: 0 }
-                    PeriodResult(period = period, met = total >= habit.frequency.times, inProgress = today in period)
-                }.filterNot { it.inProgress && !it.met }
+        ): List<DayResult> =
+            (trackingStart(habit, today)..today)
+                .dates()
+                .map { day ->
+                    val count = getPeriod(habit, day).dates().sumOf { logs[it]?.count ?: 0 }
+                    DayResult(day = day, met = count >= habit.frequency.times)
+                }.filterNot { it.day == today && !it.met }
                 .toList()
 
-        private fun longestRun(periods: List<PeriodResult>): Int {
+        private fun longestRun(days: List<DayResult>): Int {
             var longest = 0
             var current = 0
-            periods.forEach { result ->
+            days.forEach { result ->
                 current = if (result.met) current + 1 else 0
                 longest = maxOf(longest, current)
             }
@@ -65,14 +67,20 @@ class CalculateHabitStatsUseCase
         }
 
         private fun rate(
-            periods: List<PeriodResult>,
+            habit: Habit,
+            logs: Map<LocalDate, HabitDayLog>,
             today: LocalDate,
-            days: Int,
-        ): Int? {
-            val windowStart = today.minusDays(days - 1L)
-            val inWindow = periods.filter { it.period.endInclusive >= windowStart }
-            if (inWindow.isEmpty()) return null
-            return (inWindow.count { it.met } * PERCENT / inWindow.size.toDouble()).roundToInt()
+            windowDays: Int,
+        ): HabitRate? {
+            val from = maxOf(today.minusDays(windowDays - 1L), trackingStart(habit, today))
+            val doneToday = (logs[today]?.count ?: 0) > 0
+            val to = if (doneToday) today else today.minusDays(1)
+            if (to < from) return null
+
+            val days = ChronoUnit.DAYS.between(from, to) + 1
+            val expected = ceil(habit.frequency.times * days / habit.frequency.windowDays.toDouble()).toInt()
+            val done = (from..to).dates().sumOf { logs[it]?.count ?: 0 }
+            return HabitRate(met = minOf(done, expected), total = expected)
         }
 
         private fun monthlyCounts(
@@ -97,16 +105,14 @@ class CalculateHabitStatsUseCase
             today: LocalDate,
         ): LocalDate = if (habit.isBuiltIn) chartStart(today) else habit.startDate
 
-        private data class PeriodResult(
-            val period: ClosedRange<LocalDate>,
+        private data class DayResult(
+            val day: LocalDate,
             val met: Boolean,
-            val inProgress: Boolean,
         )
 
         private companion object {
             const val WEEK_DAYS = 7
             const val MONTH_DAYS = 30
             const val CHART_MONTHS = 12
-            const val PERCENT = 100
         }
     }

@@ -40,15 +40,16 @@ class UpdateHabitUseCaseTest {
         }
 
     @Test
-    fun `blank name resets a built-in habit to its default`() =
+    fun `a built-in habit cannot be renamed`() =
         runTest {
-            val builtIn = testHabit(id = 1, builtIn = BuiltInHabit.Macros).copy(name = "Custom")
+            val builtIn = testHabit(id = 1, builtIn = BuiltInHabit.Macros)
             val repository = FakeHabitRepository(listOf(builtIn))
 
-            UpdateHabitUseCase(repository, ValidateHabitUseCase())(builtIn.copy(name = "  "))
+            UpdateHabitUseCase(repository, ValidateHabitUseCase())(builtIn.copy(name = "My macros", points = 15))
 
             val updated = repository.getHabits().first().single()
             assertEquals(null, updated.name)
+            assertEquals(15, updated.points)
         }
 
     @Test

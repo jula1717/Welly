@@ -8,15 +8,7 @@ import org.junit.Assert.assertNull
 import org.junit.Test
 
 class GetHabitStatsUseCaseTest {
-    private val getPeriod = GetHabitPeriodUseCase()
-
-    private fun useCase(habits: FakeHabitRepository) =
-        GetHabitStatsUseCase(
-            habitRepository = habits,
-            getHabitLogs = getHabitLogsUseCase(habits),
-            calculateStats = CalculateHabitStatsUseCase(getPeriod, CalculateHabitDayStatesUseCase(getPeriod)),
-            clock = habitClock(),
-        )
+    private fun useCase(habits: FakeHabitRepository) = getHabitStatsUseCase(habits)
 
     @Test
     fun `emits stats built from the stored check-ins`() =

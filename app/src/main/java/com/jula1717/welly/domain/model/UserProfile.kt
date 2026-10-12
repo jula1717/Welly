@@ -10,10 +10,15 @@ data class UserProfile(
     val weightKg: Double,
     val activityLevel: ActivityLevel,
     val goal: NutritionGoal,
+    val workoutsPerWeek: Int = DEFAULT_WORKOUTS_PER_WEEK,
 ) {
     fun age(date: LocalDate): Int = Period.between(dateOfBirth, date).years.coerceAtLeast(0)
 
     companion object {
+        const val MIN_WORKOUTS_PER_WEEK = 1
+        const val MAX_WORKOUTS_PER_WEEK = 7
+        const val DEFAULT_WORKOUTS_PER_WEEK = 3
+
         fun default(today: LocalDate): UserProfile =
             UserProfile(
                 sex = BiologicalSex.Female,

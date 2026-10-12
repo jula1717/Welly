@@ -1,14 +1,12 @@
 <resources>
     <string name="app_name">Welly</string>
 
-    <string name="nav_today">Today</string>
-    <string name="nav_stats">Stats</string>
+    <string name="nav_log">Log</string>
+    <string name="nav_habits">Habits</string>
 
     <string name="today_add">Add</string>
     <string name="today_add_meal">Meal</string>
     <string name="today_add_drink">Drink</string>
-
-    <string name="stats_title">Statistics</string>
 
     <string name="profile_settings_title">Your profile</string>
     <string name="profile_settings_intro">This information is used to set your daily calorie and macro ranges.</string>
@@ -47,6 +45,13 @@
     <string name="profile_goal_maintain_desc">Targets match what you burn</string>
     <string name="profile_goal_gain_title">Gain weight</string>
     <string name="profile_goal_gain_desc">A small surplus to build up steadily</string>
+    <string name="profile_workouts_label">Workouts per week</string>
+    <string name="profile_workouts_info_title">Your weekly workout goal</string>
+    <string name="profile_workouts_info_body">Your goal for the built-in Workouts habit.</string>
+    <plurals name="profile_workouts_value">
+        <item quantity="one">%1$d workout</item>
+        <item quantity="other">%1$d workouts</item>
+    </plurals>
 
     <string name="date_label">Date</string>
     <string name="time_label">Time</string>
@@ -111,6 +116,7 @@
     <string name="cd_open_profile">Open profile</string>
     <string name="cd_open_settings">Open settings</string>
     <string name="cd_sex_info">Why we ask about sex</string>
+    <string name="cd_workouts_info">What the weekly workout goal is for</string>
     <string name="cd_wheel_min">minimum</string>
     <string name="cd_wheel_max">maximum</string>
     <string name="cd_labeled_field">%1$s: %2$s</string>
@@ -137,7 +143,6 @@
     <string name="activities_edit">Edit activity</string>
     <string name="activities_name_label">Name</string>
     <string name="activities_type_label">Type</string>
-    <string name="activities_delete_action">Delete</string>
     <string name="activities_delete_title">Delete \"%1$s\"?</string>
     <string name="activities_delete_body">It will disappear from the list. Workouts you already logged stay in your history.</string>
 
@@ -149,8 +154,103 @@
 
     <string name="workout_label">Workout</string>
 
+    <string name="habits_add">Add habit</string>
+    <string name="habit_built_in_macros">Macros</string>
+    <string name="habit_built_in_calories">Calories</string>
+    <string name="habit_built_in_hydration">Hydration</string>
+    <string name="habit_built_in_workouts">Workouts</string>
+
+    <string name="habit_cd_done">Done</string>
+    <string name="habit_cd_covered">Streak kept for this period</string>
+    <string name="habit_cd_not_done">Not done</string>
+    <string name="habit_cd_decrease">Decrease count</string>
+    <string name="habit_cd_increase">Increase count</string>
+
+    <string name="habit_frequency_daily">Every day</string>
+    <plurals name="habit_frequency_every_n_days">
+        <item quantity="one">Every %1$d day</item>
+        <item quantity="other">Every %1$d days</item>
+    </plurals>
+    <plurals name="habit_frequency_times_per_day">
+        <item quantity="one">%1$d time a day</item>
+        <item quantity="other">%1$d times a day</item>
+    </plurals>
+    <plurals name="habit_frequency_times_per_week">
+        <item quantity="one">%1$d time a week</item>
+        <item quantity="other">%1$d times a week</item>
+    </plurals>
+    <plurals name="habit_frequency_times_per_month">
+        <item quantity="one">%1$d time a month</item>
+        <item quantity="other">%1$d times a month</item>
+    </plurals>
+    <plurals name="habit_frequency_times_per_n_days">
+        <item quantity="one">%1$d time per %2$d days</item>
+        <item quantity="other">%1$d times per %2$d days</item>
+    </plurals>
+
+    <plurals name="habit_unit_days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="habit_streak_in_a_row">%1$d %2$s in a row</string>
+    <string name="habit_no_streak">No streak</string>
+    <plurals name="habit_progress_last_days">
+        <item quantity="one">Last %3$d day: %1$d/%2$d</item>
+        <item quantity="other">Last %3$d days: %1$d/%2$d</item>
+    </plurals>
+    <string name="habit_points_short">%1$d pts</string>
+
+    <string name="habit_stats_subtitle">%1$s · %2$s</string>
+    <string name="habit_stats_edit">Edit habit</string>
+    <string name="habit_stats_current_streak">Current streak</string>
+    <string name="habit_stats_longest_streak">Longest streak</string>
+    <string name="habit_stats_last_7_days">Last 7 days</string>
+    <string name="habit_stats_last_30_days">Last 30 days</string>
+    <string name="habit_stats_rate_of">%1$d of %2$d</string>
+    <string name="habit_stats_rate_percent">%1$d%%</string>
+    <string name="habit_stats_no_data">No data yet</string>
+    <string name="habit_stats_no_rate">–</string>
+    <string name="habit_stats_monthly_title">Completions per month</string>
+    <string name="habit_stats_legend_done">Done</string>
+    <string name="habit_stats_legend_covered">In streak</string>
+    <string name="habit_stats_legend_none">None</string>
+    <string-array name="habit_weekdays_short">
+        <item>Mo</item>
+        <item>Tu</item>
+        <item>We</item>
+        <item>Th</item>
+        <item>Fr</item>
+        <item>Sa</item>
+        <item>Su</item>
+    </string-array>
+    <string name="habit_cd_previous_month">Previous month</string>
+    <string name="habit_cd_next_month">Next month</string>
+
+    <string name="habit_form_new_title">New habit</string>
+    <string name="habit_form_edit_title">Edit habit</string>
+    <string name="habit_form_name_label">Name</string>
+    <string name="habit_form_points_label">Points per completion</string>
+    <string name="habit_form_frequency_label">How often</string>
+    <string name="habit_form_frequency_fixed">The schedule of a built-in habit can\'t be changed: %1$s.</string>
+    <string name="habit_form_add">Add habit</string>
+    <string name="habit_form_quota_too_high">That many times don\'t fit into the period.</string>
+    <string name="habit_form_times_suffix_per_day">times a day</string>
+    <string name="habit_form_times_suffix_per_week">times a week</string>
+    <string name="habit_form_times_suffix_per_month">times a month</string>
+    <string name="habit_form_times_per">times per</string>
+    <string name="habit_form_every">Every</string>
+    <string name="habit_form_days">days</string>
+    <string name="habit_cd_delete">Delete habit</string>
+    <string name="habit_delete_title">Delete habit \"%1$s\"?</string>
+    <string name="habit_delete_body">Its history and statistics will be deleted. Points you\'ve earned stay on your account.</string>
+
+    <string name="settings_habits_section">Built-in habits</string>
+    <string name="settings_habits_enabled_count">Switched on: %1$d/%2$d</string>
+    <string name="settings_habits_intro">Switch off the ones you don\'t want to track.</string>
+
     <string name="save">Save</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
     <string name="close">Close</string>
 </resources>

@@ -128,7 +128,7 @@ private fun DeleteActivityButton(
             modifier = Modifier.padding(end = 8.dp),
         )
         Text(
-            text = stringResource(R.string.activities_delete_action),
+            text = stringResource(R.string.delete),
             color = MaterialTheme.colorScheme.error,
         )
     }

@@ -1,7 +1,6 @@
 package com.jula1717.welly.domain.usecase
 
 import com.jula1717.welly.domain.model.HabitStats
-import com.jula1717.welly.domain.repository.HabitRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -14,14 +13,14 @@ import javax.inject.Inject
 class GetHabitStatsUseCase
     @Inject
     constructor(
-        private val habitRepository: HabitRepository,
+        private val getHabit: GetHabitUseCase,
         private val getHabitLogs: GetHabitLogsUseCase,
         private val calculateStats: CalculateHabitStatsUseCase,
         private val clock: Clock,
     ) {
         @OptIn(ExperimentalCoroutinesApi::class)
         operator fun invoke(habitId: Long): Flow<HabitStats?> =
-            habitRepository.getHabit(habitId).flatMapLatest { habit ->
+            getHabit(habitId).flatMapLatest { habit ->
                 if (habit == null) {
                     flowOf(null)
                 } else {

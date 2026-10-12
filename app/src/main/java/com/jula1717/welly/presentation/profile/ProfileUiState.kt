@@ -13,6 +13,7 @@ data class ProfileUiState(
     val sex: BiologicalSex = BiologicalSex.Unspecified,
     val activityLevel: ActivityLevel? = null,
     val goal: NutritionGoal? = null,
+    val workoutsPerWeek: Int = UserProfile.DEFAULT_WORKOUTS_PER_WEEK,
     val isLoaded: Boolean = false,
     val isSaving: Boolean = false,
     val loadFailed: Boolean = false,
@@ -29,6 +30,7 @@ data class ProfileUiState(
             sex = profile.sex,
             activityLevel = profile.activityLevel,
             goal = profile.goal,
+            workoutsPerWeek = profile.workoutsPerWeek,
         )
 
     fun toUserProfile(): UserProfile? {
@@ -44,6 +46,7 @@ data class ProfileUiState(
             weightKg = weight,
             activityLevel = activity,
             goal = nutritionGoal,
+            workoutsPerWeek = workoutsPerWeek,
         )
     }
 

@@ -7,6 +7,7 @@ import com.jula1717.welly.domain.model.Habit
 import com.jula1717.welly.domain.model.HabitDayLog
 import com.jula1717.welly.domain.model.HabitFrequency
 import com.jula1717.welly.domain.model.Meal
+import com.jula1717.welly.domain.model.UserProfile
 import com.jula1717.welly.domain.model.Workout
 import com.jula1717.welly.fake.FakeDrinkRepository
 import com.jula1717.welly.fake.FakeHabitRepository
@@ -59,6 +60,52 @@ internal fun getHabitLogsUseCase(
             clock,
         ),
     calculateBuiltInLogs = CalculateBuiltInHabitLogsUseCase(CalculateDailyIntakeTotalsUseCase()),
+)
+
+internal fun observeWorkoutGoalUseCase(profile: UserProfile? = null) =
+    ObserveWorkoutGoalUseCase(ObserveUserProfileUseCase(FakeUserProfileRepository(profile)))
+
+internal fun getHabitsUseCase(
+    habits: FakeHabitRepository,
+    profile: UserProfile? = null,
+) = GetHabitsUseCase(habits, observeWorkoutGoalUseCase(profile))
+
+internal fun getHabitUseCase(
+    habits: FakeHabitRepository,
+    profile: UserProfile? = null,
+) = GetHabitUseCase(habits, observeWorkoutGoalUseCase(profile))
+
+internal fun calculateHabitStatsUseCase(): CalculateHabitStatsUseCase {
+    val getPeriod = GetHabitPeriodUseCase()
+    return CalculateHabitStatsUseCase(getPeriod, CalculateHabitDayStatesUseCase(getPeriod))
+}
+
+internal fun getHabitSummariesUseCase(
+    habits: FakeHabitRepository,
+    clock: Clock = habitClock(),
+    meals: List<Meal> = emptyList(),
+    drinks: List<Drink> = emptyList(),
+    workouts: List<Workout> = emptyList(),
+): GetHabitSummariesUseCase {
+    val getPeriod = GetHabitPeriodUseCase()
+    return GetHabitSummariesUseCase(
+        getHabits = getHabitsUseCase(habits),
+        getHabitLogs = getHabitLogsUseCase(habits, meals, drinks, workouts, clock),
+        getPeriod = getPeriod,
+        calculateDayStates = CalculateHabitDayStatesUseCase(getPeriod),
+        calculateStats = calculateHabitStatsUseCase(),
+        clock = clock,
+    )
+}
+
+internal fun getHabitStatsUseCase(
+    habits: FakeHabitRepository,
+    clock: Clock = habitClock(),
+) = GetHabitStatsUseCase(
+    getHabit = getHabitUseCase(habits),
+    getHabitLogs = getHabitLogsUseCase(habits, clock = clock),
+    calculateStats = calculateHabitStatsUseCase(),
+    clock = clock,
 )
 
 internal fun testTargets() =

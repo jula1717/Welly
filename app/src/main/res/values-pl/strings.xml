@@ -2,14 +2,12 @@
 <resources>
     <string name="app_name">Welly</string>
 
-    <string name="nav_today">Dziś</string>
-    <string name="nav_stats">Statystyki</string>
+    <string name="nav_log">Log</string>
+    <string name="nav_habits">Nawyki</string>
 
     <string name="today_add">Dodaj</string>
     <string name="today_add_meal">Posiłek</string>
     <string name="today_add_drink">Napój</string>
-
-    <string name="stats_title">Statystyki</string>
 
     <string name="profile_settings_title">Twój profil</string>
     <string name="profile_settings_intro">Te informacje są wykorzystywane do ustalenia Twoich dziennych zakresów kalorii i makroskładników.</string>
@@ -48,6 +46,15 @@
     <string name="profile_goal_maintain_desc">Cele odpowiadają temu, co spalasz</string>
     <string name="profile_goal_gain_title">Przytyć</string>
     <string name="profile_goal_gain_desc">Niewielka nadwyżka, by stopniowo budować masę</string>
+    <string name="profile_workouts_label">Treningi w tygodniu</string>
+    <string name="profile_workouts_info_title">Twój tygodniowy cel treningów</string>
+    <string name="profile_workouts_info_body">Twój cel dla wbudowanego nawyku Treningi.</string>
+    <plurals name="profile_workouts_value">
+        <item quantity="one">%1$d trening</item>
+        <item quantity="few">%1$d treningi</item>
+        <item quantity="many">%1$d treningów</item>
+        <item quantity="other">%1$d treningu</item>
+    </plurals>
 
     <string name="date_label">Data</string>
     <string name="time_label">Godzina</string>
@@ -112,6 +119,7 @@
     <string name="cd_open_profile">Otwórz profil</string>
     <string name="cd_open_settings">Otwórz ustawienia</string>
     <string name="cd_sex_info">Dlaczego pytamy o płeć</string>
+    <string name="cd_workouts_info">Do czego służy tygodniowy cel treningów</string>
     <string name="cd_wheel_min">minimum</string>
     <string name="cd_wheel_max">maksimum</string>
     <!-- Etykieta dostępności łącząca nazwę pola z jego bieżącą wartością: %1$s = nazwa, %2$s = wartość. -->
@@ -141,7 +149,6 @@
     <string name="activities_edit">Edytuj aktywność</string>
     <string name="activities_name_label">Nazwa</string>
     <string name="activities_type_label">Typ</string>
-    <string name="activities_delete_action">Usuń</string>
     <string name="activities_delete_title">Usunąć „%1$s”?</string>
     <string name="activities_delete_body">Zniknie z listy. Zapisane już treningi zostaną w historii.</string>
 
@@ -153,8 +160,117 @@
 
     <string name="workout_label">Trening</string>
 
+    <string name="habits_add">Dodaj nawyk</string>
+    <string name="habit_built_in_macros">Makro</string>
+    <string name="habit_built_in_calories">Kalorie</string>
+    <string name="habit_built_in_hydration">Nawodnienie</string>
+    <string name="habit_built_in_workouts">Treningi</string>
+
+    <string name="habit_cd_done">Zaliczone</string>
+    <string name="habit_cd_covered">Seria utrzymana w tym okresie</string>
+    <string name="habit_cd_not_done">Niezaliczone</string>
+    <string name="habit_cd_decrease">Zmniejsz licznik</string>
+    <string name="habit_cd_increase">Zwiększ licznik</string>
+
+    <string name="habit_frequency_daily">Codziennie</string>
+    <plurals name="habit_frequency_every_n_days">
+        <item quantity="one">Co %1$d dzień</item>
+        <item quantity="few">Co %1$d dni</item>
+        <item quantity="many">Co %1$d dni</item>
+        <item quantity="other">Co %1$d dnia</item>
+    </plurals>
+    <plurals name="habit_frequency_times_per_day">
+        <item quantity="one">%1$d raz dziennie</item>
+        <item quantity="few">%1$d razy dziennie</item>
+        <item quantity="many">%1$d razy dziennie</item>
+        <item quantity="other">%1$d razy dziennie</item>
+    </plurals>
+    <plurals name="habit_frequency_times_per_week">
+        <item quantity="one">%1$d raz w tygodniu</item>
+        <item quantity="few">%1$d razy w tygodniu</item>
+        <item quantity="many">%1$d razy w tygodniu</item>
+        <item quantity="other">%1$d razy w tygodniu</item>
+    </plurals>
+    <plurals name="habit_frequency_times_per_month">
+        <item quantity="one">%1$d raz w miesiącu</item>
+        <item quantity="few">%1$d razy w miesiącu</item>
+        <item quantity="many">%1$d razy w miesiącu</item>
+        <item quantity="other">%1$d razy w miesiącu</item>
+    </plurals>
+    <plurals name="habit_frequency_times_per_n_days">
+        <item quantity="one">%1$d raz na %2$d dni</item>
+        <item quantity="few">%1$d razy na %2$d dni</item>
+        <item quantity="many">%1$d razy na %2$d dni</item>
+        <item quantity="other">%1$d razy na %2$d dni</item>
+    </plurals>
+
+    <plurals name="habit_unit_days">
+        <item quantity="one">dzień</item>
+        <item quantity="few">dni</item>
+        <item quantity="many">dni</item>
+        <item quantity="other">dnia</item>
+    </plurals>
+    <string name="habit_streak_in_a_row">%1$d %2$s z rzędu</string>
+    <string name="habit_no_streak">Brak serii</string>
+    <plurals name="habit_progress_last_days">
+        <item quantity="one">Ostatni %3$d dzień: %1$d/%2$d</item>
+        <item quantity="few">Ostatnie %3$d dni: %1$d/%2$d</item>
+        <item quantity="many">Ostatnie %3$d dni: %1$d/%2$d</item>
+        <item quantity="other">Ostatnie %3$d dnia: %1$d/%2$d</item>
+    </plurals>
+    <string name="habit_points_short">%1$d pkt</string>
+
+    <string name="habit_stats_subtitle">%1$s · %2$s</string>
+    <string name="habit_stats_edit">Edytuj nawyk</string>
+    <string name="habit_stats_current_streak">Obecna seria</string>
+    <string name="habit_stats_longest_streak">Najdłuższa seria</string>
+    <string name="habit_stats_last_7_days">Ostatnie 7 dni</string>
+    <string name="habit_stats_last_30_days">Ostatnie 30 dni</string>
+    <string name="habit_stats_rate_of">%1$d z %2$d</string>
+    <string name="habit_stats_rate_percent">%1$d%%</string>
+    <string name="habit_stats_no_data">Brak danych</string>
+    <string name="habit_stats_no_rate">–</string>
+    <string name="habit_stats_monthly_title">Wykonania w miesiącu</string>
+    <string name="habit_stats_legend_done">Wykonane</string>
+    <string name="habit_stats_legend_covered">W serii</string>
+    <string name="habit_stats_legend_none">Brak</string>
+    <string-array name="habit_weekdays_short">
+        <item>pn</item>
+        <item>wt</item>
+        <item>śr</item>
+        <item>cz</item>
+        <item>pt</item>
+        <item>so</item>
+        <item>nd</item>
+    </string-array>
+    <string name="habit_cd_previous_month">Poprzedni miesiąc</string>
+    <string name="habit_cd_next_month">Następny miesiąc</string>
+
+    <string name="habit_form_new_title">Nowy nawyk</string>
+    <string name="habit_form_edit_title">Edytuj nawyk</string>
+    <string name="habit_form_name_label">Nazwa</string>
+    <string name="habit_form_points_label">Punkty za wykonanie</string>
+    <string name="habit_form_frequency_label">Jak często</string>
+    <string name="habit_form_frequency_fixed">Harmonogramu wbudowanego nawyku nie można zmienić: %1$s.</string>
+    <string name="habit_form_add">Dodaj nawyk</string>
+    <string name="habit_form_quota_too_high">Tyle razy nie mieści się w tym okresie.</string>
+    <string name="habit_form_times_suffix_per_day">razy dziennie</string>
+    <string name="habit_form_times_suffix_per_week">razy w tygodniu</string>
+    <string name="habit_form_times_suffix_per_month">razy w miesiącu</string>
+    <string name="habit_form_times_per">razy na</string>
+    <string name="habit_form_every">Co</string>
+    <string name="habit_form_days">dni</string>
+    <string name="habit_cd_delete">Usuń nawyk</string>
+    <string name="habit_delete_title">Usunąć nawyk „%1$s”?</string>
+    <string name="habit_delete_body">Historia i statystyki nawyku zostaną usunięte. Zdobyte punkty zostają na koncie.</string>
+
+    <string name="settings_habits_section">Wbudowane nawyki</string>
+    <string name="settings_habits_enabled_count">Włączone: %1$d/%2$d</string>
+    <string name="settings_habits_intro">Wyłącz te, których nie chcesz śledzić.</string>
+
     <string name="save">Zapisz</string>
     <string name="ok">OK</string>
     <string name="cancel">Anuluj</string>
+    <string name="delete">Usuń</string>
     <string name="close">Zamknij</string>
 </resources>

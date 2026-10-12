@@ -1,6 +1,7 @@
 package com.jula1717.welly.data.datastore
 
 import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.mutablePreferencesOf
 import com.jula1717.welly.domain.model.ActivityLevel
 import com.jula1717.welly.domain.model.BiologicalSex
@@ -19,6 +20,7 @@ class UserProfilePreferencesTest {
         weightKg = 61.0,
         activityLevel = ActivityLevel.Light,
         goal = NutritionGoal.Lose,
+        workoutsPerWeek = 5,
     )
 
     @Test
@@ -26,6 +28,14 @@ class UserProfilePreferencesTest {
         val prefs = mutablePreferencesOf().apply { putUserProfile(profile) }
 
         assertEquals(profile, prefs.toUserProfile())
+    }
+
+    @Test
+    fun `a profile saved before workouts per week existed gets the default`() {
+        val prefs = mutablePreferencesOf().apply { putUserProfile(profile) }
+        prefs.remove(intPreferencesKey("workouts_per_week"))
+
+        assertEquals(UserProfile.DEFAULT_WORKOUTS_PER_WEEK, prefs.toUserProfile()?.workoutsPerWeek)
     }
 
     @Test

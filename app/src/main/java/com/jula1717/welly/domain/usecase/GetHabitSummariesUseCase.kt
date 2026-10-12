@@ -3,6 +3,7 @@ package com.jula1717.welly.domain.usecase
 import com.jula1717.welly.domain.model.Habit
 import com.jula1717.welly.domain.model.HabitDayState
 import com.jula1717.welly.domain.model.HabitDaySummary
+import com.jula1717.welly.domain.util.dates
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -20,6 +21,7 @@ class GetHabitSummariesUseCase
         private val getHabitLogs: GetHabitLogsUseCase,
         private val getPeriod: GetHabitPeriodUseCase,
         private val calculateDayStates: CalculateHabitDayStatesUseCase,
+        private val calculateStats: CalculateHabitStatsUseCase,
         private val clock: Clock,
     ) {
         @OptIn(ExperimentalCoroutinesApi::class)
@@ -37,13 +39,16 @@ class GetHabitSummariesUseCase
             habit: Habit,
             date: LocalDate,
         ): Flow<HabitDaySummary> {
-            val range = getPeriod(habit, date).start..date
-            return getHabitLogs(habit, range).map { logs ->
-                val states = calculateDayStates(habit, logs, range, LocalDate.now(clock))
+            val today = LocalDate.now(clock)
+            val periodUntilDate = getPeriod(habit, date).start..date
+            val logsRange = minOf(calculateStats.statsRange(habit, today).start, periodUntilDate.start)..today
+            return getHabitLogs(habit, logsRange).map { logs ->
+                val states = calculateDayStates(habit, logs, periodUntilDate, today)
                 HabitDaySummary(
                     habit = habit,
                     state = states[date] ?: HabitDayState.Empty,
-                    periodCount = logs.values.sumOf { it.count },
+                    periodCount = periodUntilDate.dates().sumOf { logs[it]?.count ?: 0 },
+                    currentStreak = calculateStats(habit, logs, today).currentStreak,
                 )
             }
         }

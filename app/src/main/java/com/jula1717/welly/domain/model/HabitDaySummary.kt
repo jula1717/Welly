@@ -4,4 +4,5 @@ data class HabitDaySummary(
     val habit: Habit,
     val state: HabitDayState,
     val periodCount: Int,
+    val currentStreak: Int,
 )

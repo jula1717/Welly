@@ -1,4 +1,4 @@
-package com.jula1717.welly.presentation.activities
+package com.jula1717.welly.presentation.components
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
@@ -11,19 +11,20 @@ import com.jula1717.welly.R
 import com.jula1717.welly.ui.theme.WellyTheme
 
 @Composable
-internal fun DeleteActivityDialog(
-    activityName: String,
+internal fun DeleteConfirmationDialog(
+    title: String,
+    message: String,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.activities_delete_title, activityName)) },
-        text = { Text(stringResource(R.string.activities_delete_body)) },
+        title = { Text(title) },
+        text = { Text(message) },
         confirmButton = {
             TextButton(onClick = onConfirm) {
                 Text(
-                    text = stringResource(R.string.activities_delete_action),
+                    text = stringResource(R.string.delete),
                     color = MaterialTheme.colorScheme.error,
                 )
             }
@@ -38,10 +39,11 @@ internal fun DeleteActivityDialog(
 
 @PreviewLightDark
 @Composable
-private fun DeleteActivityDialogPreview() {
+private fun DeleteConfirmationDialogPreview() {
     WellyTheme {
-        DeleteActivityDialog(
-            activityName = "Jogging",
+        DeleteConfirmationDialog(
+            title = stringResource(R.string.habit_delete_title, "Cooking at home"),
+            message = stringResource(R.string.habit_delete_body),
             onConfirm = {},
             onDismiss = {},
         )

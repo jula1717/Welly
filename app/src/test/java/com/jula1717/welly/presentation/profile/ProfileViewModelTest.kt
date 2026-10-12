@@ -133,6 +133,41 @@ class ProfileViewModelTest {
     }
 
     @Test
+    fun `the workout goal starts at the default, is saved with the profile and stays within its limits`() {
+        val (viewModel, repository) = buildViewModel()
+        viewModel.enterCompleteProfile()
+        assertEquals(UserProfile.DEFAULT_WORKOUTS_PER_WEEK, viewModel.uiState.value.workoutsPerWeek)
+
+        viewModel.onEvent(ProfileUiEvent.OnWorkoutsPerWeekChanged(0))
+        assertEquals(UserProfile.MIN_WORKOUTS_PER_WEEK, viewModel.uiState.value.workoutsPerWeek)
+
+        viewModel.onEvent(ProfileUiEvent.OnWorkoutsPerWeekChanged(30))
+        assertEquals(UserProfile.MAX_WORKOUTS_PER_WEEK, viewModel.uiState.value.workoutsPerWeek)
+
+        viewModel.onEvent(ProfileUiEvent.OnWorkoutsPerWeekChanged(5))
+        viewModel.onEvent(ProfileUiEvent.OnSave)
+
+        assertEquals(5, repository.savedProfile?.workoutsPerWeek)
+    }
+
+    @Test
+    fun `prefills the workout goal from a stored profile`() {
+        val stored = UserProfile(
+            sex = BiologicalSex.Female,
+            dateOfBirth = LocalDate.of(1990, 1, 1),
+            heightCm = 170,
+            weightKg = 60.0,
+            activityLevel = ActivityLevel.Light,
+            goal = NutritionGoal.Maintain,
+            workoutsPerWeek = 6,
+        )
+
+        val (viewModel, _) = buildViewModel(storedProfile = stored)
+
+        assertEquals(6, viewModel.uiState.value.workoutsPerWeek)
+    }
+
+    @Test
     fun `save stays disabled until every required field is provided`() {
         val (viewModel, repository) = buildViewModel()
 

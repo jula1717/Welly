@@ -17,10 +17,11 @@ class GetHabitSummariesUseCaseTest {
 
     private fun useCase(habits: FakeHabitRepository) =
         GetHabitSummariesUseCase(
-            getHabits = GetHabitsUseCase(habits),
+            getHabits = getHabitsUseCase(habits),
             getHabitLogs = getHabitLogsUseCase(habits),
             getPeriod = getPeriod,
             calculateDayStates = CalculateHabitDayStatesUseCase(getPeriod),
+            calculateStats = CalculateHabitStatsUseCase(getPeriod, CalculateHabitDayStatesUseCase(getPeriod)),
             clock = habitClock(),
         )
 
@@ -65,6 +66,30 @@ class GetHabitSummariesUseCaseTest {
 
             assertEquals(HabitDayStatus.Done, summary.state.status)
             assertEquals(1, summary.state.count)
+        }
+
+    @Test
+    fun `reports the current streak`() =
+        runTest {
+            val habits = FakeHabitRepository(listOf(testHabit(id = 1)))
+            (HABIT_MONDAY.dayOfMonth..HABIT_TODAY.dayOfMonth).forEach {
+                habits.setCompletionCount(1, HABIT_TODAY.withDayOfMonth(it), 1)
+            }
+
+            val summary = useCase(habits)(HABIT_TODAY).first().single()
+
+            assertEquals(4, summary.currentStreak)
+        }
+
+    @Test
+    fun `reports a past day state independently of today`() =
+        runTest {
+            val habits = FakeHabitRepository(listOf(testHabit(id = 1)))
+            habits.setCompletionCount(1, HABIT_MONDAY, 1)
+
+            val summary = useCase(habits)(HABIT_MONDAY).first().single()
+
+            assertEquals(HabitDayStatus.Done, summary.state.status)
         }
 
     @Test

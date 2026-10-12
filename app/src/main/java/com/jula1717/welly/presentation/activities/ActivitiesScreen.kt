@@ -23,6 +23,7 @@ import com.jula1717.welly.R
 import com.jula1717.welly.domain.model.Activity
 import com.jula1717.welly.domain.model.ActivityType
 import com.jula1717.welly.presentation.components.ActivityItem
+import com.jula1717.welly.presentation.components.DeleteConfirmationDialog
 import com.jula1717.welly.presentation.components.PrimaryButton
 import com.jula1717.welly.presentation.components.WellyTopBar
 import com.jula1717.welly.ui.theme.WellyTheme
@@ -55,8 +56,9 @@ internal fun ActivitiesScreen(
     }
 
     state.pendingDelete?.let { activity ->
-        DeleteActivityDialog(
-            activityName = activity.name,
+        DeleteConfirmationDialog(
+            title = stringResource(R.string.activities_delete_title, activity.name),
+            message = stringResource(R.string.activities_delete_body),
             onConfirm = { onEvent(ActivitiesUiEvent.OnDeleteConfirmed) },
             onDismiss = { onEvent(ActivitiesUiEvent.OnDeleteDismissed) },
         )

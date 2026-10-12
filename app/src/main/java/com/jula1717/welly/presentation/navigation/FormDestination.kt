@@ -11,6 +11,9 @@ private val formDestinations: Set<KClass<out WellyDestination>> = setOf(
     SettingsDestination::class,
     ActivitiesDestination::class,
     AddWorkoutDestination::class,
+    HabitStatsDestination::class,
+    HabitFormDestination::class,
+    BuiltInHabitsDestination::class,
 )
 
 fun isFormDestination(destination: NavDestination?): Boolean =

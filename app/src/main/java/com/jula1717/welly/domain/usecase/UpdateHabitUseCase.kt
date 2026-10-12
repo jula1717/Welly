@@ -11,21 +11,24 @@ class UpdateHabitUseCase
         private val validate: ValidateHabitUseCase,
     ) {
         /**
-         * Saves only what the user may edit: name, points and the enabled flag, plus the frequency of custom
-         * habits. Everything else (built-in identity, built-in frequency, start date) keeps its stored value.
-         * A blank name resets a built-in habit to its default name; unknown ids are ignored. Throws
+         * Saves only what the user may edit: for a custom habit its name, points, frequency and enabled flag, for
+         * a built-in habit just the points and the enabled flag. Everything else (built-in identity, name and
+         * frequency, start date) keeps its stored value; unknown ids are ignored. Throws
          * [IllegalArgumentException] for input that [ValidateHabitUseCase] rejects.
          */
         suspend operator fun invoke(habit: Habit) {
             val stored = repository.findHabit(habit.id) ?: return
-            val name = habit.name?.trimEnd()
             val updated =
-                stored.copy(
-                    name = if (stored.isBuiltIn) name?.ifBlank { null } else name,
-                    points = habit.points,
-                    isEnabled = habit.isEnabled,
-                    frequency = if (stored.isBuiltIn) stored.frequency else habit.frequency,
-                )
+                if (stored.isBuiltIn) {
+                    stored.copy(points = habit.points, isEnabled = habit.isEnabled)
+                } else {
+                    stored.copy(
+                        name = habit.name?.trimEnd(),
+                        points = habit.points,
+                        isEnabled = habit.isEnabled,
+                        frequency = habit.frequency,
+                    )
+                }
             require(validate(updated)) { "Invalid habit: $updated" }
             repository.updateHabit(updated)
         }

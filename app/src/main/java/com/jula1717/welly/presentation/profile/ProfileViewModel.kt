@@ -3,6 +3,7 @@ package com.jula1717.welly.presentation.profile
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jula1717.welly.domain.model.UserProfile
 import com.jula1717.welly.domain.usecase.ObserveUserProfileUseCase
 import com.jula1717.welly.domain.usecase.UpdateUserProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -71,6 +72,16 @@ class ProfileViewModel
 
                 is ProfileUiEvent.OnGoalChanged ->
                     _uiState.update { it.copy(goal = event.goal) }
+
+                is ProfileUiEvent.OnWorkoutsPerWeekChanged ->
+                    _uiState.update {
+                        it.copy(
+                            workoutsPerWeek = event.workoutsPerWeek.coerceIn(
+                                UserProfile.MIN_WORKOUTS_PER_WEEK,
+                                UserProfile.MAX_WORKOUTS_PER_WEEK,
+                            ),
+                        )
+                    }
 
                 ProfileUiEvent.OnSave -> save()
             }

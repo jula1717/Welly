@@ -18,6 +18,7 @@ private val HEIGHT_CM = intPreferencesKey("height_cm")
 private val WEIGHT_KG = doublePreferencesKey("weight_kg")
 private val ACTIVITY_LEVEL = stringPreferencesKey("activity_level")
 private val GOAL = stringPreferencesKey("goal")
+private val WORKOUTS_PER_WEEK = intPreferencesKey("workouts_per_week")
 
 internal fun Preferences.toUserProfile(): UserProfile? {
     val sex = this[SEX]?.let { enumValueOrNull<BiologicalSex>(it) } ?: return null
@@ -38,6 +39,7 @@ internal fun Preferences.toUserProfile(): UserProfile? {
         weightKg = weightKg,
         activityLevel = activityLevel,
         goal = goal,
+        workoutsPerWeek = this[WORKOUTS_PER_WEEK] ?: UserProfile.DEFAULT_WORKOUTS_PER_WEEK,
     )
 }
 
@@ -48,6 +50,7 @@ internal fun MutablePreferences.putUserProfile(profile: UserProfile) {
     this[WEIGHT_KG] = profile.weightKg
     this[ACTIVITY_LEVEL] = profile.activityLevel.name
     this[GOAL] = profile.goal.name
+    this[WORKOUTS_PER_WEEK] = profile.workoutsPerWeek
 }
 
 private inline fun <reified T : Enum<T>> enumValueOrNull(name: String): T? =

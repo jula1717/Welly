@@ -31,31 +31,21 @@ class CalculateHabitDayStatesUseCase
         ): HabitDayState {
             val log = logs[date]
             val count = log?.count ?: 0
-            val period = getPeriod(habit, date)
-            val times = habit.frequency.times
+            val frequency = habit.frequency
             val status =
                 when {
-                    period.start == period.endInclusive && count >= times -> HabitDayStatus.Done
-                    period.start == period.endInclusive -> HabitDayStatus.None
+                    !frequency.isRolling && count >= frequency.times -> HabitDayStatus.Done
+                    !frequency.isRolling -> HabitDayStatus.None
                     count > 0 -> HabitDayStatus.Done
-                    isCovered(logs, period, times, date) -> HabitDayStatus.Covered
+                    windowCount(habit, logs, date) >= frequency.times -> HabitDayStatus.Covered
                     else -> HabitDayStatus.None
                 }
             return HabitDayState(status = status, count = count, detail = log?.detail ?: HabitDayDetail.None)
         }
 
-        private fun isCovered(
+        private fun windowCount(
+            habit: Habit,
             logs: Map<LocalDate, HabitDayLog>,
-            period: ClosedRange<LocalDate>,
-            times: Int,
             date: LocalDate,
-        ): Boolean {
-            var total = 0
-            val quotaMetOn =
-                period.dates().firstOrNull { day ->
-                    total += logs[day]?.count ?: 0
-                    total >= times
-                }
-            return quotaMetOn != null && date > quotaMetOn
-        }
+        ): Int = getPeriod(habit, date).dates().sumOf { logs[it]?.count ?: 0 }
     }

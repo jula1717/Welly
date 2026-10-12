@@ -80,6 +80,62 @@ class CalculateHabitDayStatesUseCaseTest {
     }
 
     @Test
+    fun `an every-N-days habit covers the days the last N days hold the completion`() {
+        val everyFiveDays = testHabit(frequency = HabitFrequency(1, 5, HabitPeriodUnit.Day))
+        val saturday = HABIT_MONDAY.plusDays(5)
+
+        val result =
+            useCase(everyFiveDays, logsOn(HABIT_MONDAY), HABIT_MONDAY..saturday, saturday)
+                .mapValues { it.value.status }
+
+        assertEquals(HabitDayStatus.Done, result[HABIT_MONDAY])
+        (1L..4L).forEach { assertEquals(HabitDayStatus.Covered, result[HABIT_MONDAY.plusDays(it)]) }
+        assertEquals(HabitDayStatus.None, result[saturday])
+    }
+
+    @Test
+    fun `an X-times-in-N-days habit is covered only once the quota fits the window`() {
+        val twiceInFourDays = testHabit(frequency = HabitFrequency(2, 4, HabitPeriodUnit.Day))
+        val logs = logsOn(HABIT_MONDAY)
+
+        val oneDone = useCase(twiceInFourDays, logs, HABIT_MONDAY..tuesday, HABIT_TODAY)
+        val twoDone = useCase(twiceInFourDays, logs + logsOn(tuesday), HABIT_MONDAY..wednesday, HABIT_TODAY)
+
+        assertEquals(HabitDayStatus.None, oneDone.getValue(tuesday).status)
+        assertEquals(HabitDayStatus.Covered, twoDone.getValue(wednesday).status)
+    }
+
+    @Test
+    fun `a week does not reset on monday`() {
+        val sunday = HABIT_MONDAY.minusDays(1)
+
+        val result = useCase(twicePerWeek, logsOn(sunday, HABIT_MONDAY), sunday..HABIT_TODAY, HABIT_TODAY)
+
+        assertEquals(HabitDayStatus.Covered, result.getValue(HABIT_TODAY).status)
+        assertEquals(HabitDayStatus.Covered, result.getValue(wednesday).status)
+    }
+
+    @Test
+    fun `a month is the last thirty days, not the calendar month`() {
+        val fourPerMonth = testHabit(frequency = HabitFrequency(4, 1, HabitPeriodUnit.Month))
+        val logs = logsOn(HABIT_TODAY.minusDays(25), HABIT_TODAY.minusDays(20), HABIT_TODAY.minusDays(10), tuesday)
+
+        val result = useCase(fourPerMonth, logs, HABIT_TODAY..HABIT_TODAY, HABIT_TODAY)
+
+        assertEquals(HabitDayStatus.Covered, result.getValue(HABIT_TODAY).status)
+    }
+
+    @Test
+    fun `a completion older than the window no longer counts`() {
+        val twoPerWeek = testHabit(frequency = HabitFrequency(2, 1, HabitPeriodUnit.Week))
+        val logs = logsOn(HABIT_TODAY.minusDays(7), HABIT_TODAY.minusDays(1))
+
+        val result = useCase(twoPerWeek, logs, HABIT_TODAY..HABIT_TODAY, HABIT_TODAY)
+
+        assertEquals(HabitDayStatus.None, result.getValue(HABIT_TODAY).status)
+    }
+
+    @Test
     fun `future days are omitted`() {
         val result = statuses(testHabit(), emptyMap())
 

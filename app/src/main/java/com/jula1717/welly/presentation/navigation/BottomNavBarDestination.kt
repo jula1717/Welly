@@ -2,8 +2,8 @@ package com.jula1717.welly.presentation.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.BarChart
-import androidx.compose.material.icons.outlined.Today
+import androidx.compose.material.icons.outlined.EditNote
+import androidx.compose.material.icons.outlined.TaskAlt
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.jula1717.welly.R
 
@@ -12,14 +12,15 @@ enum class BottomNavBarDestination(
     @param:StringRes val labelRes: Int,
     val icon: ImageVector,
 ) {
-    Today(
+    //TODO: rename today -> log
+    Log(
         route = TodayDestination,
-        labelRes = R.string.nav_today,
-        icon = Icons.Outlined.Today,
+        labelRes = R.string.nav_log,
+        icon = Icons.Outlined.EditNote,
     ),
-    Stats(
-        route = StatsDestination,
-        labelRes = R.string.nav_stats,
-        icon = Icons.Outlined.BarChart,
+    Habits(
+        route = HabitsDestination,
+        labelRes = R.string.nav_habits,
+        icon = Icons.Outlined.TaskAlt,
     ),
 }

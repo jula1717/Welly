@@ -67,6 +67,11 @@ private fun NavGraphBuilder.wellyGraph(navController: NavHostController) {
         onBack = { navController.popBackStack() },
         onOpenProfile = { navController.navigateToProfile() },
         onOpenActivities = { navController.navigateToActivities() },
+        onOpenBuiltInHabits = { navController.navigateToBuiltInHabits() },
+    )
+
+    builtInHabitsDestination(
+        onBack = { navController.popBackStack() },
     )
 
     activitiesDestination(
@@ -85,5 +90,19 @@ private fun NavGraphBuilder.wellyGraph(navController: NavHostController) {
         onBack = { navController.popBackStack() },
     )
 
-    statsDestination()
+    habitsDestination(
+        onOpenHabit = { habitId -> navController.navigateToHabitStats(habitId) },
+        onAddHabit = { navController.navigateToHabitForm() },
+        onOpenProfile = { navController.navigateToProfile() },
+        onOpenSettings = { navController.navigateToSettings() },
+    )
+
+    habitStatsDestination(
+        onBack = { navController.popBackStack() },
+        onEditHabit = { habitId -> navController.navigateToHabitForm(habitId) },
+    )
+
+    habitFormDestination(
+        onBack = { navController.popBackStack() },
+    )
 }

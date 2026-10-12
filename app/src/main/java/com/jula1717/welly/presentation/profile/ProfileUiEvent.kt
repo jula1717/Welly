@@ -30,5 +30,9 @@ sealed interface ProfileUiEvent {
         val goal: NutritionGoal,
     ) : ProfileUiEvent
 
+    data class OnWorkoutsPerWeekChanged(
+        val workoutsPerWeek: Int,
+    ) : ProfileUiEvent
+
     data object OnSave : ProfileUiEvent
 }

@@ -19,12 +19,14 @@ fun NavGraphBuilder.settingsDestination(
     onBack: () -> Unit,
     onOpenProfile: () -> Unit,
     onOpenActivities: () -> Unit,
+    onOpenBuiltInHabits: () -> Unit,
 ) {
     composable<SettingsDestination> {
         SettingsDestination(
             onBack = onBack,
             onOpenProfile = onOpenProfile,
             onOpenActivities = onOpenActivities,
+            onOpenBuiltInHabits = onOpenBuiltInHabits,
         )
     }
 }

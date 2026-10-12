@@ -167,6 +167,11 @@ private fun ProfileForm(
             onSelected = { onEvent(ProfileUiEvent.OnActivityLevelChanged(it)) },
         )
 
+        WorkoutsPerWeekField(
+            workoutsPerWeek = state.workoutsPerWeek,
+            onWorkoutsPerWeekChange = { onEvent(ProfileUiEvent.OnWorkoutsPerWeekChanged(it)) },
+        )
+
         GoalSection(
             selected = state.goal,
             onSelected = { onEvent(ProfileUiEvent.OnGoalChanged(it)) },

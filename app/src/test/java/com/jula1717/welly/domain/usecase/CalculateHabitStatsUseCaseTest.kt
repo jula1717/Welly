@@ -4,6 +4,7 @@ import com.jula1717.welly.domain.model.BuiltInHabit
 import com.jula1717.welly.domain.model.HabitDayLog
 import com.jula1717.welly.domain.model.HabitFrequency
 import com.jula1717.welly.domain.model.HabitPeriodUnit
+import com.jula1717.welly.domain.model.HabitRate
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
@@ -54,8 +55,10 @@ class CalculateHabitStatsUseCaseTest {
     fun `rates count finished days in the window`() {
         val stats = useCase(testHabit(), logsOn(*days(12..14)), HABIT_TODAY)
 
-        assertEquals(50, stats.rateLast7Days)
-        assertEquals(21, stats.rateLast30Days)
+        assertEquals(HabitRate(met = 3, total = 6), stats.rateLast7Days)
+        assertEquals(HabitRate(met = 3, total = 14), stats.rateLast30Days)
+        assertEquals(50, stats.rateLast7Days?.percent)
+        assertEquals(21, stats.rateLast30Days?.percent)
     }
 
     @Test
@@ -69,33 +72,101 @@ class CalculateHabitStatsUseCaseTest {
     }
 
     @Test
-    fun `weekly streak counts weeks that met the quota`() {
+    fun `a weekly streak counts the days the last seven days held the quota`() {
         val logs = logsOn(day(5), day(6), day(12), day(13))
 
         val stats = useCase(testHabit(frequency = twicePerWeek), logs, HABIT_TODAY)
 
-        assertEquals(2, stats.currentStreak)
-        assertEquals(2, stats.longestStreak)
-        assertEquals(67, stats.rateLast30Days)
+        assertEquals(10, stats.currentStreak)
+        assertEquals(10, stats.longestStreak)
+        assertEquals(HabitRate(met = 4, total = 4), stats.rateLast30Days)
+        assertEquals(100, stats.rateLast30Days?.percent)
     }
 
     @Test
-    fun `an open week that has not met the quota yet does not break the streak`() {
+    fun `a weekly streak ends once the last seven days no longer hold the quota`() {
         val logs = logsOn(day(5), day(6), day(12))
 
         val stats = useCase(testHabit(frequency = twicePerWeek), logs, HABIT_TODAY)
 
-        assertEquals(1, stats.currentStreak)
-        assertEquals(1, stats.longestStreak)
+        assertEquals(0, stats.currentStreak)
+        assertEquals(7, stats.longestStreak)
     }
 
     @Test
-    fun `several workouts in one week satisfy a weekly goal`() {
+    fun `several workouts in one day satisfy a weekly goal`() {
         val logs = mapOf(day(12) to HabitDayLog(count = 2))
 
         val stats = useCase(testHabit(frequency = twicePerWeek), logs, HABIT_TODAY)
 
-        assertEquals(1, stats.currentStreak)
+        assertEquals(4, stats.currentStreak)
+    }
+
+    @Test
+    fun `today only counts towards the rate once the habit was done today`() {
+        val habit = testHabit(startDate = day(12))
+        val doneEarlier = logsOn(day(13), day(14))
+
+        val notYet = useCase(habit, doneEarlier, HABIT_TODAY)
+        val done = useCase(habit, doneEarlier + logsOn(HABIT_TODAY), HABIT_TODAY)
+
+        assertEquals(HabitRate(met = 2, total = 3), notYet.rateLast7Days)
+        assertEquals(HabitRate(met = 3, total = 4), done.rateLast7Days)
+    }
+
+    @Test
+    fun `a weekly habit done once in the week counts as one of one`() {
+        val habit = testHabit(startDate = day(8), frequency = HabitFrequency.Weekly)
+
+        val stats = useCase(habit, logsOn(day(13)), HABIT_TODAY)
+
+        assertEquals(HabitRate(met = 1, total = 1), stats.rateLast7Days)
+    }
+
+    @Test
+    fun `an every-N-days habit keeps the streak alive for N days after a completion`() {
+        val everyFiveDays = testHabit(frequency = HabitFrequency(1, 5, HabitPeriodUnit.Day))
+
+        val stats = useCase(everyFiveDays, logsOn(day(11)), HABIT_TODAY)
+
+        assertEquals(5, stats.currentStreak)
+        assertEquals(5, stats.longestStreak)
+    }
+
+    @Test
+    fun `an every-N-days habit is still alive on the day the next completion is due`() {
+        val everyFiveDays = testHabit(frequency = HabitFrequency(1, 5, HabitPeriodUnit.Day))
+
+        val stats = useCase(everyFiveDays, logsOn(day(10)), HABIT_TODAY)
+
+        assertEquals(5, stats.currentStreak)
+    }
+
+    @Test
+    fun `an every-N-days habit loses the streak when the completion is overdue`() {
+        val everyFiveDays = testHabit(frequency = HabitFrequency(1, 5, HabitPeriodUnit.Day))
+
+        val stats = useCase(everyFiveDays, logsOn(day(9)), HABIT_TODAY)
+
+        assertEquals(0, stats.currentStreak)
+        assertEquals(5, stats.longestStreak)
+    }
+
+    @Test
+    fun `completing an every-N-days habit on the due day extends the streak`() {
+        val everyFiveDays = testHabit(frequency = HabitFrequency(1, 5, HabitPeriodUnit.Day))
+
+        val stats = useCase(everyFiveDays, logsOn(day(10), day(15)), HABIT_TODAY)
+
+        assertEquals(6, stats.currentStreak)
+    }
+
+    @Test
+    fun `remembers the first day the habit was done`() {
+        val stats = useCase(testHabit(), logsOn(day(14), day(12), day(13)), HABIT_TODAY)
+
+        assertEquals(day(12), stats.firstCompletion)
+        assertNull(useCase(testHabit(), emptyMap(), HABIT_TODAY).firstCompletion)
     }
 
     @Test
@@ -136,9 +207,9 @@ class CalculateHabitStatsUseCaseTest {
     }
 
     @Test
-    fun `stats range reaches back to the start of the first weekly period`() {
+    fun `stats range reaches back by the length of the quota window`() {
         val habit = testHabit(builtIn = BuiltInHabit.Workouts, frequency = HabitFrequency.Weekly)
-        assertEquals(LocalDate.of(2025, 10, 27)..HABIT_TODAY, useCase.statsRange(habit, HABIT_TODAY))
+        assertEquals(LocalDate.of(2025, 10, 26)..HABIT_TODAY, useCase.statsRange(habit, HABIT_TODAY))
     }
 
     @Test

@@ -39,6 +39,21 @@ class ValidateHabitUseCaseTest {
     }
 
     @Test
+    fun `custom quota cannot exceed the days of a multi-day period`() {
+        assertTrue(useCase(testHabit(frequency = HabitFrequency(7, 1, HabitPeriodUnit.Week))))
+        assertFalse(useCase(testHabit(frequency = HabitFrequency(8, 1, HabitPeriodUnit.Week))))
+        assertTrue(useCase(testHabit(frequency = HabitFrequency(30, 1, HabitPeriodUnit.Month))))
+        assertFalse(useCase(testHabit(frequency = HabitFrequency(31, 1, HabitPeriodUnit.Month))))
+        assertTrue(useCase(testHabit(frequency = HabitFrequency(10, 14, HabitPeriodUnit.Day))))
+        assertFalse(useCase(testHabit(frequency = HabitFrequency(15, 14, HabitPeriodUnit.Day))))
+    }
+
+    @Test
+    fun `a single-day period has no quota limit`() {
+        assertTrue(useCase(testHabit(frequency = HabitFrequency(12, 1, HabitPeriodUnit.Day))))
+    }
+
+    @Test
     fun `rejects frequencies that are not positive`() {
         assertFalse(useCase(testHabit(frequency = HabitFrequency(0, 1, HabitPeriodUnit.Day))))
         assertFalse(useCase(testHabit(frequency = HabitFrequency(1, 0, HabitPeriodUnit.Day))))
