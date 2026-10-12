@@ -21,7 +21,7 @@ class SetHabitCompletionCountUseCase
             count: Int,
         ) {
             val habit = repository.findHabit(habitId) ?: return
-            require(habit.canCheckIn) { "Built-in habits cannot be checked in manually" }
+            require(!habit.isBuiltIn) { "Built-in habits cannot be checked in manually" }
             require(date <= LocalDate.now(clock)) { "Cannot check in a habit for a future day" }
             repository.setCompletionCount(habitId, date, count.coerceAtLeast(0))
         }
