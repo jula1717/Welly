@@ -10,6 +10,7 @@ import com.jula1717.welly.domain.usecase.getHabitSummariesUseCase
 import com.jula1717.welly.domain.usecase.habitClock
 import com.jula1717.welly.domain.usecase.testHabit
 import com.jula1717.welly.fake.FakeHabitRepository
+import com.jula1717.welly.presentation.util.SelectedDateHolder
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -27,11 +28,15 @@ class HabitsViewModelTest {
     private val clock = habitClock()
     private val custom = testHabit(id = 1)
 
-    private fun TestScope.buildViewModel(habits: FakeHabitRepository): HabitsViewModel {
+    private fun TestScope.buildViewModel(
+        habits: FakeHabitRepository,
+        selectedDateHolder: SelectedDateHolder = SelectedDateHolder(clock),
+    ): HabitsViewModel {
         val viewModel = HabitsViewModel(
             getHabitSummaries = getHabitSummariesUseCase(habits, clock),
             ensureBuiltInHabits = EnsureBuiltInHabitsUseCase(habits, clock),
             setHabitCompletionCount = SetHabitCompletionCountUseCase(habits, clock),
+            selectedDateHolder = SelectedDateHolder(clock),
             clock = clock,
         )
         backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { viewModel.uiState.collect {} }

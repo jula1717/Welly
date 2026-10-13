@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.jula1717.welly.domain.usecase.EnsureBuiltInHabitsUseCase
 import com.jula1717.welly.domain.usecase.GetHabitSummariesUseCase
 import com.jula1717.welly.domain.usecase.SetHabitCompletionCountUseCase
+import com.jula1717.welly.presentation.util.SelectedDateHolder
 import com.jula1717.welly.presentation.util.canGoToNextDay
 import com.jula1717.welly.presentation.util.coerceNotFuture
 import com.jula1717.welly.presentation.util.nextDay
@@ -31,12 +32,13 @@ class HabitsViewModel
         getHabitSummaries: GetHabitSummariesUseCase,
         ensureBuiltInHabits: EnsureBuiltInHabitsUseCase,
         private val setHabitCompletionCount: SetHabitCompletionCountUseCase,
+        selectedDateHolder: SelectedDateHolder,
         private val clock: Clock,
     ) : ViewModel() {
         private fun today(): LocalDate = LocalDate.now(clock)
 
-        /** The day the user is currently looking at. */
-        private val selectedDate = MutableStateFlow(today())
+        /** The day the user is currently looking at, shared with the other day-based screens. */
+        private val selectedDate = selectedDateHolder.selectedDate
 
         /** "Today", re-read on every screen resume so a midnight rollover is picked up. */
         private val currentDay = MutableStateFlow(today())

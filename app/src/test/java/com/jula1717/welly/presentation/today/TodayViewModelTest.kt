@@ -20,6 +20,7 @@ import com.jula1717.welly.fake.FakeDrinkRepository
 import com.jula1717.welly.fake.FakeMealRepository
 import com.jula1717.welly.fake.FakeUserProfileRepository
 import com.jula1717.welly.fake.FakeWorkoutRepository
+import com.jula1717.welly.presentation.util.SelectedDateHolder
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -59,6 +60,7 @@ class TodayViewModelTest {
             observeUserProfileUseCase = ObserveUserProfileUseCase(FakeUserProfileRepository(profile)),
             calculateDailyTargetsUseCase = CalculateDailyTargetsUseCase(CalculateBmrUseCase(), clock),
             calculateDailyIntakeTotals = CalculateDailyIntakeTotalsUseCase(),
+            selectedDateHolder = SelectedDateHolder(clock),
             clock = clock,
         )
         backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { viewModel.uiState.collect {} }
