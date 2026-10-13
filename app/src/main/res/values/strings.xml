@@ -143,6 +143,7 @@
     <string name="activities_edit">Edit activity</string>
     <string name="activities_name_label">Name</string>
     <string name="activities_type_label">Type</string>
+    <string name="activities_cd_delete">Delete activity</string>
     <string name="activities_delete_title">Delete \"%1$s\"?</string>
     <string name="activities_delete_body">It will disappear from the list. Workouts you already logged stay in your history.</string>
 

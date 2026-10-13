@@ -149,6 +149,7 @@
     <string name="activities_edit">Edytuj aktywność</string>
     <string name="activities_name_label">Nazwa</string>
     <string name="activities_type_label">Typ</string>
+    <string name="activities_cd_delete">Usuń aktywność</string>
     <string name="activities_delete_title">Usunąć „%1$s”?</string>
     <string name="activities_delete_body">Zniknie z listy. Zapisane już treningi zostaną w historii.</string>
 

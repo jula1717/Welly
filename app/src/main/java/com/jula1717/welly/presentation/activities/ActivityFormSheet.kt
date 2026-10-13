@@ -2,6 +2,7 @@ package com.jula1717.welly.presentation.activities
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,13 +10,11 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jula1717.welly.R
 import com.jula1717.welly.domain.model.ActivityType
+import com.jula1717.welly.presentation.components.CircleIconButton
 import com.jula1717.welly.presentation.components.SaveButton
 import com.jula1717.welly.presentation.components.SegmentedToggle
 import com.jula1717.welly.presentation.util.titleResId
@@ -60,12 +60,24 @@ private fun ActivityFormContent(
             modifier = Modifier.padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Text(
-                text = stringResource(if (form.isNew) R.string.activities_add else R.string.activities_edit),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.ExtraBold,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = stringResource(if (form.isNew) R.string.activities_add else R.string.activities_edit),
+                    modifier = Modifier.weight(1f),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                if (!form.isNew) {
+                    CircleIconButton(
+                        icon = Icons.Outlined.Delete,
+                        contentDescription = stringResource(R.string.activities_cd_delete),
+                        onClick = { onEvent(ActivitiesUiEvent.OnDeleteClicked) },
+                        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                        contentColor = MaterialTheme.colorScheme.error,
+                    )
+                }
+            }
 
             OutlinedTextField(
                 value = form.name,
@@ -102,34 +114,6 @@ private fun ActivityFormContent(
         SaveButton(
             enabled = form.canSave,
             onClick = { onEvent(ActivitiesUiEvent.OnFormSave) },
-        )
-
-        if (!form.isNew) {
-            DeleteActivityButton(
-                onClick = { onEvent(ActivitiesUiEvent.OnDeleteClicked) },
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(bottom = 8.dp),
-            )
-        }
-    }
-}
-
-@Composable
-private fun DeleteActivityButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    TextButton(onClick = onClick, modifier = modifier) {
-        Icon(
-            imageVector = Icons.Outlined.Delete,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.error,
-            modifier = Modifier.padding(end = 8.dp),
-        )
-        Text(
-            text = stringResource(R.string.delete),
-            color = MaterialTheme.colorScheme.error,
         )
     }
 }
