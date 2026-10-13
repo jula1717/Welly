@@ -153,12 +153,12 @@ internal fun AddDrinkScreen(
         ) {
             SegmentedToggle(
                 options = listOf(
-                    stringResource(R.string.add_drink_calorie_caloric),
                     stringResource(R.string.add_drink_calorie_non_caloric),
+                    stringResource(R.string.add_drink_calorie_caloric),
                 ),
-                selectedIndex = if (calorieType == DrinkCalorieType.Caloric) 0 else 1,
+                selectedIndex = if (calorieType == DrinkCalorieType.NonCaloric) 0 else 1,
                 onOptionSelected = { index ->
-                    val type = if (index == 0) DrinkCalorieType.Caloric else DrinkCalorieType.NonCaloric
+                    val type = if (index == 0) DrinkCalorieType.NonCaloric else DrinkCalorieType.Caloric
                     onEvent(AddDrinkUiEvent.OnCalorieTypeChanged(type))
                 },
                 modifier = Modifier.padding(top = 4.dp),

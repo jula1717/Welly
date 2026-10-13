@@ -6,7 +6,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 data class AddDrinkUiState(
-    val calorieType: DrinkCalorieType = DrinkCalorieType.Caloric,
+    val calorieType: DrinkCalorieType = DrinkCalorieType.NonCaloric,
     val amountMl: Int = 330,
     val description: String = "",
     val date: LocalDate = LocalDate.now(),
